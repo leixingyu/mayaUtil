@@ -43,7 +43,7 @@ def get_root_node(obj, type_specified=None):
 
 
 def get_hierarchy_of_type(root, type_specified):
-    """ get all children (including root) in hierarchy of a certain type
+    """ get all children (excluding root) in hierarchy of a certain type
 
     :param root: single scene object
     :param type_specified: str
@@ -59,7 +59,9 @@ def get_hierarchy_of_type(root, type_specified):
     else:
         # the current object has children
         for child in children:
-            obj_list += get_hierarchy_of_type(child, type_specified)
+            if cmds.objectType(child, isType=type_specified):
+                obj_list.append(child)
+                obj_list += get_hierarchy_of_type(child, type_specified)
 
     return obj_list
 

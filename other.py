@@ -4,59 +4,11 @@
 """
 
 import maya.cmds as cmds
-import maya.OpenMayaUI
-from shiboken2 import wrapInstance
-from Qt import QtCore, QtGui, QtWidgets
 
 __author__ = "Xingyu Lei"
 __maintainer__ = "Xingyu Lei"
 __email__ = "wzaxzt@gmail.com"
 __status__ = "development"
-
-
-def get_maya_main_window():
-    """ Get the window instance of Maya
-
-    :return: window instance, maya program window
-    """
-
-    main_window_ptr = maya.OpenMayaUI.MQtUtil.mainWindow()
-    return wrapInstance(long(main_window_ptr), QtWidgets.QMainWindow)
-
-
-def remove_module(module_name):
-    """ Remove module completely to avoid multiple reload
-
-    :param module_name: string
-    """
-    import sys
-    print('Removing {} module'.format(module_name))
-
-    to_delete = []
-    for module in sys.modules:
-        if module.split('.')[0] == module_name:
-            to_delete.append(module)
-
-    for module in to_delete:
-        del(sys.modules[module])
-
-
-def restore_channel(obj):
-    """ restore channel box to default setting
-
-    :param obj: scene object
-    """
-
-    kwargs = {
-        'lock': 0,
-        'keyable': 1,
-    }
-
-    for transform in ['t', 'r', 's']:
-        for axis in ['x', 'y', 'z']:
-            cmds.setAttr('{}.{}{}'.format(obj, transform, axis), **kwargs)
-    cmds.setAttr('{}.visibility'.format(obj), **kwargs)
-    cmds.setAttr('{}.visibility'.format(obj), 1)
 
 
 def check_duplicates(enable_rename=True):
