@@ -83,7 +83,8 @@ def viewport_off(func):
         try:
             return func(*args, **kwargs)
         except Exception:
-            raise # will raise original error
+            # will raise original error
+            raise
         finally:
             cmds.paneLayout(PANE_NAME, manage=1, edit=1)
     return wrap

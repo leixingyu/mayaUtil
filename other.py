@@ -24,7 +24,7 @@ def check_duplicates(enable_rename=True):
     duplicates.sort(key=lambda obj: obj.count('|'), reverse=True)
 
     if not duplicates:
-        print "No Duplicates"
+        print("No Duplicates")
     else:
         if enable_rename:
             name = duplicates[0]
@@ -40,10 +40,10 @@ def check_duplicates(enable_rename=True):
 
             # add '#' as the suffix, maya will find the next available number
             new_name = cmds.rename(name, '{}#'.format(suffix))
-            print "renamed {} to {}".format(name, new_name)
+            print("renamed {} to {}".format(name, new_name))
             check_duplicates(enable_rename=True)
         else:
-            print "Found Duplicates"
+            print("Found Duplicates")
 
 
 def is_name_unique(obj):

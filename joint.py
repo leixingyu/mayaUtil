@@ -4,7 +4,7 @@
 """
 
 import maya.cmds as cmds
-from outliner import *
+from .outliner import *
 
 __author__ = "Xingyu Lei"
 __maintainer__ = "Xingyu Lei"
@@ -127,8 +127,8 @@ def clear_joint_orientation(root):
         rot_x = cmds.getAttr('{}.rx'.format(jnt))
         rot_y = cmds.getAttr('{}.ry'.format(jnt))
         rot_z = cmds.getAttr('{}.rz'.format(jnt))
-        print 'non-zero rotation value found in jnt: {}; ' \
-              'rotation value: ({},{},{})'.format(jnt, rot_x, rot_y, rot_z)
+        print('non-zero rotation value found in jnt: {}; ' \
+              'rotation value: ({},{},{})'.format(jnt, rot_x, rot_y, rot_z))
 
     # unbind skin, clear rotation, re-bind skin
     meshes = get_skin_from_joint(root)

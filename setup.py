@@ -1,5 +1,7 @@
 from shiboken2 import wrapInstance
-from Qt import QtCore, QtGui, QtWidgets
+from builtins import int
+
+from utility.Qt import QtCore, QtGui, QtWidgets
 
 import maya.OpenMayaUI
 import maya.cmds as cmds
@@ -13,7 +15,7 @@ def get_maya_main_window():
     """
 
     main_window_ptr = maya.OpenMayaUI.MQtUtil.mainWindow()
-    return wrapInstance(long(main_window_ptr), QtWidgets.QMainWindow)
+    return wrapInstance(int(main_window_ptr), QtWidgets.QMainWindow)
 
 
 def set_window_pos(child_only=False, x=0, y=0):
@@ -22,7 +24,7 @@ def set_window_pos(child_only=False, x=0, y=0):
     :param child_only: option to set position only for widgets parented
     to maya main window, defaults to False
     :type child_only: bool, optional
-    :param x: window x posiiton, defaults to 0
+    :param x: window x position, defaults to 0
     :type x: int, optional
     :param y: window y position, defaults to 0
     :type y: int, optional
@@ -85,7 +87,7 @@ def manage_references():
     #    cmds.file(path, unloadReference=1)
 
 
-def toggle_layer(layer_sig = '*:Layer', is_viz=True):
+def toggle_layer(layer_sig='*:Layer', is_viz=True):
     """ Toggle on or off layer
 
     :param layer_sig: pattern used to filter layer, defaults to '*:Layer'
@@ -110,3 +112,13 @@ def load_plugin(name):
     """
     if not cmds.pluginInfo(name, loaded=1, q=1):
         cmds.loadPlugin(name)
+
+
+def save_preference():
+    """
+    Save the script editor and default prefs
+    :return:
+    """
+
+    cmds.savePrefs()
+    mel.eval('syncExecuterBackupFiles();')
