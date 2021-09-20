@@ -117,8 +117,14 @@ def load_plugin(name):
 def save_preference():
     """
     Save the script editor and default prefs
-    :return:
     """
 
-    cmds.savePrefs()
-    mel.eval('syncExecuterBackupFiles();')
+    # the script editor needs to be open, otherwise tabs will be destoried
+    cmd = '''
+    ScriptEditor;
+    syncExecuterBackupFiles();
+    syncExecuterTabState();
+    savePrefs -general;
+    '''
+
+    mel.eval(cmd)

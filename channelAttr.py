@@ -1,6 +1,32 @@
 import maya.cmds as cmds
 
 
+def get_attrs_channel(node):
+    """
+    Get all attributes of the node displayed in the channel box
+    TODO: test and clean up the code
+
+    :param node: maya node name (cannot be a blendshape node)
+    :type node: string
+    :return: attributes
+    :type: list
+    """
+
+    attributes = list()
+
+    attrs = cmds.listAttr(node)
+    cb_attrs = cmds.listAnimatable(node)
+    if attrs and cb_attrs:
+        ordered_attrs = [
+            attr for attr in attrs
+            for cb_attr in cb_attrs
+            if cb_attr.endswith(attr)
+        ]
+        attributes.extend(ordered_attrs)
+
+    return attributes
+
+
 def get_attrs_selected():
     """ Get selected attribute of current node in the channelbox
 
@@ -70,7 +96,7 @@ def reset_attrs():
                     cmds.setAttr(attribute, defaultValue[0])
 
 
-def get_unbinded_attrs(node):
+def get_attrs_unbinded(node):
     """ Get full attribute list from a container un-bind section
 
     :param node: maya container node
@@ -86,43 +112,6 @@ def get_unbinded_attrs(node):
 
     unbind_attrs = cmds.container(container, publishName=1, unbindAttr=1, q=1)
     return unbind_attrs
-
-
-def get_output_blendshapes(mobject):
-    """ Get blendshape nodes from output section of the channel box
-
-    :param mobject: maya object
-    :type mobject: string
-    :return: blendshape nodes
-    :rtype: list
-    """
-
-    cmds.select(mobject)
-    output_attrs = cmds.channelBox('mainChannelBox', out=1, q=1)
-
-    nodes = []
-    for attr in output_attrs:
-        node = attr.split('.')[0]
-        if cmds.nodeType(node) == 'blendShape':
-            nodes.append(node)
-
-    return nodes
-
-
-def get_input_blendshapes(mobject):
-    """ Get blendshape nodes from input section of the channel box
-
-    :param mobject: maya object
-    :type mobject: string
-    :return: blendshape nodes
-    :rtype: list
-    """
-
-    nodes = []
-    for node in cmds.listHistory(mobject):
-        if cmds.nodeType(node) == 'blendShape':
-            nodes.append(node)
-    return nodes
 
 
 def connect_weighted(source, destination, ratio):
