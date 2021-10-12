@@ -1,4 +1,4 @@
-from Qt import QtWidgets
+from utility._vendor.Qt import QtWidgets
 
 # TODO: confirm the following
 

@@ -1,14 +1,8 @@
 import maya.cmds as cmds
 
-'''
-def create_export_node(attrs, node_name):
-    """ Create a temp node for export use
 
-    :param attrs: [description]
-    :type attrs: [type]
-    :return: [description]
-    :rtype: [type]
-    """
+def create_export_node(attrs, node_name):
+    """ Create a temp node for export use"""
 
     node = cmds.createNode('network', name=node_name)
     cmds.select(node)
@@ -24,7 +18,7 @@ def create_export_node(attrs, node_name):
             force=1
             )
     return node
-'''
+
 
 def exportAttrToAtom(fpath, start, end):
     ''' Export as .atom of the export node'''
@@ -56,6 +50,7 @@ def exportAttrToAtom(fpath, start, end):
             "-hierarchy none"
             "-controlPoints 0").format(start=start, end=end)
     )
+
 
 def importAttrFromAtom(fpath, target):
     ''' Import .atom on the specified target mobject '''

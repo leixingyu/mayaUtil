@@ -1,7 +1,7 @@
 from shiboken2 import wrapInstance
 from builtins import int
 
-from utility.Qt import QtCore, QtGui, QtWidgets
+from utility._vendor.Qt import QtWidgets
 
 import maya.OpenMayaUI
 import maya.cmds as cmds

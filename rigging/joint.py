@@ -4,7 +4,7 @@
 """
 
 import maya.cmds as cmds
-from .outliner import *
+from utility.setup.outliner import *
 
 __author__ = "Xingyu Lei"
 __maintainer__ = "Xingyu Lei"
