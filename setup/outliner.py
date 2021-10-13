@@ -1,22 +1,13 @@
-#!/usr/bin/env python
-""" Provide supporting functions for arranging objects in outliner
-
-"""
-
 import maya.cmds as cmds
-
-__author__ = "Xingyu Lei"
-__maintainer__ = "Xingyu Lei"
-__email__ = "wzaxzt@gmail.com"
-__status__ = "development"
 
 
 def get_root_node(obj, type_specified=None):
-    """Get the root of the object in the hierarchy
+    """
+    Get the root of the object in the hierarchy
 
-    :param obj: scene object
-    :param type_specified: (optional), str, restrict the root node type
-    :return: root, scene object
+    :param obj: str. scene object
+    :param type_specified: str. restrict the root node type
+    :return: str. the root scene object
     """
 
     root = None
@@ -43,11 +34,12 @@ def get_root_node(obj, type_specified=None):
 
 
 def get_hierarchy_of_type(root, type_specified):
-    """ get all children (excluding root) in hierarchy of a certain type
+    """
+    Get all children (excluding root) in hierarchy of a certain type
 
-    :param root: single scene object
-    :param type_specified: str
-    :return: list
+    :param root: str. single scene object
+    :param type_specified: str. object type
+    :return: list. object of the specified type
     """
 
     obj_list = []
@@ -67,12 +59,13 @@ def get_hierarchy_of_type(root, type_specified):
 
 
 def delete_hierarchy_except_type(roots, type_specified):
-    """ delete all other types of objects under hierarchy of root
+    """
+    Delete all other types of objects under hierarchy of root
     note: the function cannot re-parent shape node to another transform
     but since it is always on top, it is safe to delete before hand
 
-    :param roots: scene obj, list or single
-    :param type_specified: str
+    :param roots: list or str. scene obj
+    :param type_specified: str. object type
     """
 
     if not isinstance(roots, list):
@@ -99,12 +92,13 @@ def delete_hierarchy_except_type(roots, type_specified):
 
 
 def delete_hierarchy_except_node(roots, type_specified):
-    """ delete all other types of objects under hierarchy of root
+    """
+    Delete all other types of objects under hierarchy of root
     note: the function cannot re-parent shape node to another transform
     but since it is always on top, it is safe to delete before hand
 
-    :param roots: scene obj, list or single
-    :param type_specified: str
+    :param roots: list or str. scene obj
+    :param type_specified: str. object type
     """
 
     if not isinstance(roots, list):
@@ -131,9 +125,10 @@ def delete_hierarchy_except_node(roots, type_specified):
 
 
 def delete_hierarchy_shape(roots):
-    """ Delete all shapes under the given root
+    """
+    Delete all shapes under the given root
 
-    :param roots: scene object, list or single
+    :param roots: list or str. scene object
     """
 
     if not isinstance(roots, list):
@@ -146,14 +141,17 @@ def delete_hierarchy_shape(roots):
             cmds.delete(shapes)
 
 
-def get_shape_from_transform(transform, enable_result_only=True,
-                             check_unique_child=True):
-    """ get shape nodes under the transform
+def get_shape_from_transform(
+        transform,
+        enable_result_only=True,
+        check_unique_child=True):
+    """
+    Get shape nodes under the transform
 
-    :param transform: single scene object
-    :param enable_result_only: bool, get only the result shape
-    :param check_unique_child: bool, check if transform has multiple shapes
-    :return: list, the shape node
+    :param transform: str. single scene object
+    :param enable_result_only: bool. get only the result shape
+    :param check_unique_child: bool. check if transform has multiple shapes
+    :return: list. the shape node
     """
 
     shapes = cmds.listRelatives(transform, shapes=1)
@@ -172,21 +170,24 @@ def get_shape_from_transform(transform, enable_result_only=True,
 
 
 def batch_parent(obj_list, parent):
-    """ Grouping multiple objects to the same parent
-
-    :param obj_list: list
-    :param parent: scene object
     """
+    Grouping multiple objects to the same parent
+
+    :param obj_list: list, children objects
+    :param parent: str. parent object
+    """
+
     for item in obj_list:
         cmds.parent(item, parent, relative=False)
 
 
 def hierarchical_parent(obj_list):
-    """ Parent the objects in hierarchical order
-
-    :param obj_list:
-    :return:
     """
+    Parent the objects in hierarchical order
+
+    :param obj_list: objects to parent in order
+    """
+
     for index, item in enumerate(obj_list):
         if obj_list[index] != obj_list[-1]:
             cmds.parent(obj_list[index], obj_list[index+1])

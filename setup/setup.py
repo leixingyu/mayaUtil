@@ -1,15 +1,17 @@
+import sys
 from shiboken2 import wrapInstance
 from builtins import int
-
-from utility._vendor.Qt import QtWidgets
 
 import maya.OpenMayaUI
 import maya.cmds as cmds
 import maya.mel as mel
 
+from utility._vendor.Qt import QtWidgets
+
 
 def get_maya_main_window():
-    """ Get the window instance of Maya
+    """
+    Get maya's window instance
 
     :return: window instance, maya program window
     """
@@ -19,15 +21,13 @@ def get_maya_main_window():
 
 
 def set_window_pos(child_only=False, x=0, y=0):
-    """ Set window position of maya's widgets
+    """
+    Set window position of maya's widgets
 
-    :param child_only: option to set position only for widgets parented
-    to maya main window, defaults to False
-    :type child_only: bool, optional
-    :param x: window x position, defaults to 0
-    :type x: int, optional
-    :param y: window y position, defaults to 0
-    :type y: int, optional
+    :param child_only: bool. option to set position only for widgets parented
+    to maya main window
+    :param x: int. window x position
+    :param y: int. window y position
     """
 
     for child in get_maya_main_window().children():
@@ -47,11 +47,12 @@ def set_window_pos(child_only=False, x=0, y=0):
 
 
 def remove_module(module_name):
-    """ Remove module completely to avoid multiple reload
-
-    :param module_name: string
     """
-    import sys
+    Remove module completely to avoid multiple reload
+
+    :param module_name: str. name of the module
+    """
+
     print('Removing {} module'.format(module_name))
 
     to_delete = []
@@ -64,10 +65,10 @@ def remove_module(module_name):
 
 
 def manage_references():
-    """ get all reference path according to the reference editor
+    """
+    Get all reference path according to the reference editor
 
-    :return: reference path
-    :rtype: list of strings
+    :return: list. reference path
     """
 
     ref_nodes = cmds.ls(type='reference')
@@ -88,12 +89,11 @@ def manage_references():
 
 
 def toggle_layer(layer_sig='*:Layer', is_viz=True):
-    """ Toggle on or off layer
+    """
+    Toggle on or off layer
 
-    :param layer_sig: pattern used to filter layer, defaults to '*:Layer'
-    :type layer_sig: str, optional
-    :param is_viz: visible or not, defaults to True
-    :type is_viz: bool, optional
+    :param layer_sig: str. pattern used to filter layer, defaults to '*:Layer'
+    :param is_viz: bool. visible or not, defaults to True
     """
 
     layers = cmds.ls(layer_sig)
@@ -105,11 +105,12 @@ def toggle_layer(layer_sig='*:Layer', is_viz=True):
 
 
 def load_plugin(name):
-    """ load plugin if not loaded
-
-    :param name: plugin name
-    :type name: string
     """
+    Load plugin if not loaded
+
+    :param name: str. plugin name
+    """
+
     if not cmds.pluginInfo(name, loaded=1, q=1):
         cmds.loadPlugin(name)
 

@@ -5,12 +5,11 @@ import maya.cmds as cmds
 
 
 def create_dir(name):
-    """ Create a local working directory relative to scene path
+    """
+    Create a local working directory relative to scene path
 
-    :param name: name of the folder
-    :type name: string
-    :return: full path of the folder
-    :rtype: string
+    :param name: str. name of the folder
+    :return: str. full path of the folder
     """
 
     # local work dir
@@ -29,12 +28,11 @@ def create_dir(name):
 
 
 def copy_file(src_path, dst_path):
-    """ Copy the file from one place to the other
+    """
+    Copy the file from one place to the other
 
-    :param src_path: source file full path
-    :type src_path: string
-    :param dst_path: destination folder full path
-    :type dst_path: string
+    :param src_path: str. source file full path
+    :param dst_path: str. destination folder full path
     """
 
     if not os.path.isfile(src_path):

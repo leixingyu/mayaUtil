@@ -6,10 +6,8 @@ def get_attrs_channel(node):
     Get all attributes of the node displayed in the channel box
     TODO: test and clean up the code
 
-    :param node: maya node name (cannot be a blendshape node)
-    :type node: string
-    :return: attributes
-    :type: list
+    :param node: str. maya node name (cannot be a blendshape node)
+    :return: list. attributes
     """
 
     attributes = list()
@@ -28,10 +26,10 @@ def get_attrs_channel(node):
 
 
 def get_attrs_selected():
-    """ Get selected attribute of current node in the channelbox
+    """
+    Get selected attribute of current node in the channelbox
 
-    :return: full name of selected attributes
-    :rtype: list
+    :return: list. full name of selected attributes
     """
 
     selections = cmds.ls(selection=1)
@@ -49,9 +47,10 @@ def get_attrs_selected():
 
 
 def restore_channel(obj):
-    """ restore channel box to default setting
+    """
+    restore channel box to default setting
 
-    :param obj: scene object
+    :param obj: str. scene object
     """
 
     kwargs = {
@@ -67,7 +66,8 @@ def restore_channel(obj):
 
 
 def reset_attrs():
-    """ Reset selected attributes to default values
+    """
+    Reset selected attributes to default values
     """
 
     selected_channels = cmds.channelBox(
@@ -97,12 +97,11 @@ def reset_attrs():
 
 
 def get_attrs_unbinded(node):
-    """ Get full attribute list from a container un-bind section
+    """
+    Get full attribute list from a container un-bind section
 
-    :param node: maya container node
-    :type node: string
-    :return: attribute names
-    :rtype: list
+    :param node: str. maya container node
+    :return: list. attribute names
     """
 
     if cmds.container(node, isContainer=1, q=1):
@@ -115,14 +114,12 @@ def get_attrs_unbinded(node):
 
 
 def connect_weighted(source, destination, ratio):
-    """ Weighted connection using expresssion
+    """
+    Weighted connection using expresssion
 
-    :param source: source attribute
-    :type source: string
-    :param destination: destination attribute
-    :type destination: string
-    :param ratio: weighting ratio between connection
-    :type ratio: float
+    :param source: str. source attribute
+    :param destination: str. destination attribute
+    :param ratio: float. weighting ratio between connection
     """
 
     try:
@@ -136,20 +133,15 @@ def connect_weighted(source, destination, ratio):
 
 
 def connect_drivenkey(source, src_min, src_max, destination, dst_min, dst_max):
-    """ Mapped connection using set driven key
+    """
+    Mapped connection using set driven key
 
-    :param source: driver attribute
-    :type source: string
-    :param src_min: driver minium value
-    :type src_min: float
-    :param src_max: driver maxium value
-    :type src_max: float
-    :param destination: driven attribute
-    :type destination: string
-    :param dst_min: driven minium value
-    :type dst_min: float
-    :param dst_max: driven maxium value
-    :type dst_max: float
+    :param source: str. driver attribute
+    :param src_min: float. driver minimum value
+    :param src_max: float. driver maximum value
+    :param destination: str. driven attribute
+    :param dst_min: float. driven minimum value
+    :param dst_max: float. driven maximum value
     """
 
     driven = destination.split('.')[0]
@@ -177,10 +169,10 @@ def connect_drivenkey(source, src_min, src_max, destination, dst_min, dst_max):
 
 # source: https://discourse.techart.online/t/cbdeleteconnection-in-python/1179
 def delete_connection(attr):
-    """ Break attribute connection: equivalent to channelbox break connection
+    """
+    Break attribute connection: equivalent to channelbox break connection
 
-    :param attr: attribute name
-    :type attr: string
+    :param attr: str. attribute name
     """
 
     if cmds.connectionInfo(attr, isDestination=1):
@@ -195,12 +187,11 @@ def delete_connection(attr):
 
 
 def validate_connection(attribute):
-    """ Validate if a attibute could be used in a connection
+    """
+    Validate if a attribute could be used in a connection
 
-    :param attribute: attribute full name
-    :type attribute: string
-    :return: validation result and message
-    :rtype: list, [bool, string]
+    :param attribute: str. attribute full name
+    :return: list, [bool, string]. validation result and message
     """
 
     obj, channel = attribute.split('.')

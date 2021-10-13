@@ -4,10 +4,9 @@ def remove_duplicates(seq):
     | http://www.peterbe.com/plog/uniqifiers-benchmark
     | Specific method by: ``Dave Kirby``
 
-    :param seq: Input sequence
-    :type seq: list
-    :return: Unique sequence
-    :rtype: list
+    :param seq: list. Input sequence
+    :return: list. Unique sequence
     """
+
     seen = set()
     return [x for x in seq if x not in seen and not seen.add(x)]

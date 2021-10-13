@@ -2,16 +2,14 @@ import maya.cmds as cmds
 
 
 def get_blendshape_targets(blendshape):
-    """ Get all the target of a blendshape node
+    """
+    Get all the target of a blendshape node
 
-    :param blendshape: name of the blendshape node
-    :type blendshape: string
-    :return: all blendshape channels (aka. blendshape targets)
-    :type: list
+    :param blendshape: str. name of the blendshape node
+    :return: list. all blendshape channels (aka. blendshape targets)
     """
 
     # method 1
-
     all_attrs = cmds.aliasAttr(blendshape, q=1)
     # This returns you a list in the form "targetName", "weight[x]"
     # then process the list to get the target names of weights
@@ -25,12 +23,11 @@ def get_blendshape_targets(blendshape):
 
 
 def get_output_blendshapes(mobject):
-    """ Get blendshape nodes from output section of the channel box
+    """
+    Get blendshape nodes from output section of the channel box
 
-    :param mobject: maya object
-    :type mobject: string
-    :return: blendshape nodes
-    :rtype: list
+    :param mobject: str. maya object
+    :return: list. blendshape nodes
     """
 
     cmds.select(mobject)
@@ -46,12 +43,11 @@ def get_output_blendshapes(mobject):
 
 
 def get_input_blendshapes(mobject):
-    """ Get blendshape nodes from input section of the channel box
+    """
+    Get blendshape nodes from input section of the channel box
 
-    :param mobject: maya object
-    :type mobject: string
-    :return: blendshape nodes
-    :rtype: list
+    :param mobject: str. maya object
+    :return: list. blendshape nodes
     """
 
     nodes = []

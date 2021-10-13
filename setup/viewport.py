@@ -7,10 +7,10 @@ RENDERER = 'vp2Renderer'
 
 
 def get_model_panels():
-    """ Get the current model panels in the viewport
+    """
+    Get the current model panels in the viewport
 
-    :return: model panel names
-    :rtype: list of strings
+    :return: list. model panel names
     """
 
     panels = cmds.getPanel(vis=1)
@@ -22,10 +22,10 @@ def get_model_panels():
 
 
 def show_polymesh_only(model_panels=None):
-    """ Hide everything except for polymesh for current model panels
+    """
+    Hide everything except for polymesh for current model panels
 
-    :param model_panels: model panels, defaults to None
-    :type model_panels: list, optional
+    :param model_panels: list. model panels, defaults to None
     """
 
     if not model_panels:
@@ -36,12 +36,11 @@ def show_polymesh_only(model_panels=None):
 
 
 def switch_renderer(renderer, model_panels=None):
-    """ Switch renderer of the current model panels
+    """
+    Switch renderer of the current model panels
 
-    :param renderer: renderer name
-    :type renderer: string
-    :param model_panels: model panels, defaults to None
-    :type model_panels: list, optional
+    :param renderer: str. renderer name
+    :param model_panels: list. model panels
     """
 
     if not model_panels:
@@ -53,12 +52,11 @@ def switch_renderer(renderer, model_panels=None):
 
 
 def switch_camera(camera, model_panels=None):
-    """ Switch camera of the current model panels
+    """
+    Switch camera of the current model panels
 
-    :param camera: camera name
-    :type camera: string
-    :param model_panels: model panels, defaults to None
-    :type model_panels: list, optional
+    :param camera: str. camera name
+    :param model_panels: list. model panels
     """
 
     if not model_panels:

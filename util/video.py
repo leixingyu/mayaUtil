@@ -19,51 +19,50 @@ vc = VideoConverter(seq_a.sequence, seq_b.sequence)
 vc.explicitExport(output_path, '', 0, 30)
 """
 
+
 class Sequence(object):
     """
     class collects file sequence information to pass into video converter.
     """
 
     def __init__(self, folder):
-        """ Initialization
+        """
+        Initialization
 
-        :param folder: folder containing all the images to make sequence
-        :type folder: string
+        :param folder: str. folder containing all the images to make sequence
         """
 
         self._folder = folder
-        self._sequence = self._asImageSequence()
+        self._sequence = self._as_image_sequence()
 
     @property
     def folder(self):
         """
-        :return: folder containing image sequence
-        :rtype: string
+        :return: str. folder containing image sequence
         """
         return self._folder
 
     @property
     def sequence(self):
         """
-        :return: image sequences in the folder.
-        :rtype: list
+        :return: list. image sequences in the folder.
         """
         return self._sequence
 
-    def _asImageSequence(self):
+    def _as_image_sequence(self):
         """
         Returns all image files within the folder as image sequence names
         Example:
             ['C:/test01/test001.jpg', 'C:/test01/test002.jpg']
 
-        :return: image full path sequences
-        :rtype: list
+        :return: list. image full path sequences
         """
         image_names = os.listdir(self._folder)
         seq_paths = [os.path.join(self._folder, name)
                           for name in image_names]
 
         return seq_paths
+
 
 class VideoConverter(object):
     """
@@ -143,16 +142,15 @@ class VideoConverter(object):
         else:
             print(error)
 
+
 def frame_to_timecode(frame_number, frame_rate):
     """
     Convert frames into timecode format 00:00:00.0.
     Specificaly, the last digit set is a float for seconds --> 00:00:00.0
-    :param frames: Frame number to convert to timecode.
-    :type frames: int
-    :param rate: Frame rate to solve timecode base. 30fps or 24 fps.
-    :type rate: float
-    :return: Converted timecode output in format 00:00:00.0
-    :rtype: str
+
+    :param frames: int. Frame number to convert to timecode.
+    :param rate: float. Frame rate to solve timecode base. 30fps or 24 fps.
+    :return: str. Converted timecode output in format 00:00:00.0
     """
 
     remaining_frames = frame_number
@@ -168,27 +166,24 @@ def frame_to_timecode(frame_number, frame_rate):
         )
     return timecode
 
+
 def attach_audio(output_path, frame_rate, audio_file, audio_start):
     """
     Used in export function to Offset audio in merged video/audio.
-    :param output_path: output path to movie file.
-    :type output-path: string
-    :param frame_rate: frame rate
-    :type frame_rate: int
-    :param audio_file: input path to audio file
-    :type audio_file: string
-    :param audio_start: start time value to offset audio from video.
-    :type audio_start: string
-    :return: subprocess stdout and stderr.
-    :rtype: string, string
+
+    :param output_path: str. output path to movie file.
+    :param frame_rate: int. frame rate
+    :param audio_file: str. input path to audio file
+    :param audio_start: str. start time value to offset audio from video.
+    :return: (str, str). subprocess stdout and stderr.
     """
 
-    timeCode = frame_to_timecode(int(audio_start), frame_rate)
+    timecode = frame_to_timecode(int(audio_start), frame_rate)
     temp_mov = '{0}\\vid.mov'.format(os.path.dirname(output_path))
     offset_cmds = [
         ffmpeg.FFMPEG_BIN,
         '-i', output_path,
-        '-ss', timeCode,
+        '-ss', timecode,
         '-i', audio_file,
         '-vcodec', 'copy',
         '-acodec', 'copy',
@@ -206,6 +201,7 @@ def attach_audio(output_path, frame_rate, audio_file, audio_start):
     os.rename(temp_mov, output_path)
     return output, error
 
+
 def convert_video(input_path, output_path):
     """
     Combine multiple sequences (sub-folders) into one complete video
@@ -213,10 +209,8 @@ def convert_video(input_path, output_path):
         inputPath = [r'C:\scene1\sequence1', r'C:\scene1\sequence2']
         outputPath = r'D:\move\scene1'
 
-    :param input_path: [description]
-    :type input_path: [type]
-    :param output_path: [description]
-    :type output_path: [type]
+    :param input_path: str. input directory full path
+    :param output_path: str. output directory full path
     """
 
     sequences = [Sequence(path).sequence for path in input_path]

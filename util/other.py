@@ -1,20 +1,11 @@
-#!/usr/bin/env python
-""" Provide supporting functions for other useful operations in maya
-
-"""
-
 import maya.cmds as cmds
-
-__author__ = "Xingyu Lei"
-__maintainer__ = "Xingyu Lei"
-__email__ = "wzaxzt@gmail.com"
-__status__ = "development"
 
 
 def check_duplicates(enable_rename=True):
-    """ Find all duplicated short names in scene and rename them
+    """
+    Find all duplicated short names in scene and rename them
 
-    :param enable_rename: bool
+    :param enable_rename: bool, allow renaming for duplicated names
     """
 
     import re
@@ -47,10 +38,11 @@ def check_duplicates(enable_rename=True):
 
 
 def is_name_unique(obj):
-    """ Check if the object short name is unique in the scene
+    """
+    Check if the object short name is unique in the scene
 
-    :param obj: scene object
-    :return: bool
+    :param obj: str. scene object
+    :return: bool. whether the object name is unique or not
     """
     short_name = obj.split('|')
     try:
@@ -65,12 +57,13 @@ def is_name_unique(obj):
 
 
 def make_curve_by_text(text, name, font='MS Gothic'):
-    """ Make a controller out of text
+    """
+    Make a controller out of text
     
-    :param text: str, the text used for generate controller shape
-    :param name: str, name of the controller
-    :param font: str, font used for the text
-    :return: controller transform
+    :param text: str. the text used for generate controller shape
+    :param name: str. name of the controller
+    :param font: str. font used for the text
+    :return: str. controller transform
     """
 
     temp = cmds.group(em=True)
@@ -98,8 +91,8 @@ def make_curve_by_text(text, name, font='MS Gothic'):
 
 
 def mirror_locator():
-    """ Mirrors locators from Left side to Right side
-
+    """
+    Mirrors locators from Left side to Right side
     """
 
     selection = cmds.ls(selection=True)

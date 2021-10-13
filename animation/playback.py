@@ -3,10 +3,10 @@ import maya.mel as mel
 
 
 def get_timeline_range():
-    """ Get timeline full range and truncated range
+    """
+    Get timeline full range and truncated range
 
-    :return: full range and truncated range
-    :rtype: list, list
+    :return: list, full range and truncated range
     """
 
     # maya full timeline range
@@ -21,10 +21,10 @@ def get_timeline_range():
 
 
 def attach_audio(name):
-    """ Attach the audio to the timeline
+    """
+    Attach the audio to the timeline
 
-    :param name: audio name
-    :type name: string
+    :param name: str. audio name
     """
 
     audios = cmds.ls(type='audio')

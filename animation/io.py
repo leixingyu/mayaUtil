@@ -2,7 +2,15 @@ import maya.cmds as cmds
 
 
 def create_export_node(attrs, node_name):
-    """ Create a temp node for export use"""
+    """
+    Create a dedicated temp node for exporting animation use, as sometimes it's
+    necessary to have a fixed node name for mapping purpose
+
+    :param attrs: list. list of attributes
+    :param node_name: str. the name of the temp node
+    :return: str. the node object
+    """
+    """  """
 
     node = cmds.createNode('network', name=node_name)
     cmds.select(node)
@@ -20,8 +28,14 @@ def create_export_node(attrs, node_name):
     return node
 
 
-def exportAttrToAtom(fpath, start, end):
-    ''' Export as .atom of the export node'''
+def export_attr_to_atom(fpath, start, end):
+    """
+    Export as .atom of the export node
+
+    :param fpath: str. file path
+    :param start: int. start frame
+    :param end: int. end frame
+    """
 
     cmds.file(
         fpath,
@@ -52,8 +66,13 @@ def exportAttrToAtom(fpath, start, end):
     )
 
 
-def importAttrFromAtom(fpath, target):
-    ''' Import .atom on the specified target mobject '''
+def import_attr_from_atom(fpath, target):
+    """
+    Import .atom on the specified target mobject
+
+    :param fpath: str. file path
+    :param target: str. maya object
+    """
 
     cmds.select(target)
     cmds.file(

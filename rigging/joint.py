@@ -1,22 +1,13 @@
-#!/usr/bin/env python
-""" Provide supporting functions for rigging
-
-"""
-
 import maya.cmds as cmds
-from utility.setup.outliner import *
-
-__author__ = "Xingyu Lei"
-__maintainer__ = "Xingyu Lei"
-__email__ = "wzaxzt@gmail.com"
-__status__ = "development"
+from utility.setup import outliner
 
 
 def get_skin_from_joint(jnt):
-    """ get all skinned mesh influenced by certain joint (chain)
+    """
+    Get all skinned mesh influenced by certain joint (chain)
 
-    :param jnt: single jnt, preferably jnt root
-    :return: list, mesh transform
+    :param jnt: str. single jnt, preferably jnt root
+    :return: list. mesh transforms
     """
 
     cls = cmds.listConnections(jnt, type='skinCluster')
@@ -30,14 +21,15 @@ def get_skin_from_joint(jnt):
 
 
 def get_joint_from_skin(mesh):
-    """ get all joints influencing certain skinned mesh
+    """
+    Get all joints influencing certain skinned mesh
 
-    :param mesh: scene object, could be transform or shape
-    :return: list, joints
+    :param mesh: str. scene object, could be transform or shape
+    :return: list. joints
     """
 
     if cmds.objectType(mesh, isType='transform'):
-        mesh = get_shape_from_transform(mesh)
+        mesh = outliner.get_shape_from_transform(mesh)
     elif cmds.objectType(mesh, isType='mesh'):
         pass
     else:
@@ -54,16 +46,17 @@ def get_joint_from_skin(mesh):
 
 
 def enable_joint_visibility(roots):
-    """ Toggle on joint visibility by all means
+    """
+    Toggle on joint visibility by all means
 
-    :param roots: joint roots, list or single
+    :param roots: list or str. joint roots
     """
 
     if not isinstance(roots, list):
         roots = [roots]
 
     for root in roots:
-        jnts = get_hierarchy_of_type(root, 'joint')
+        jnts = outliner.get_hierarchy_of_type(root, 'joint')
         for jnt in jnts:
             # visibility
             try:
@@ -84,9 +77,10 @@ def enable_joint_visibility(roots):
 
 
 def orient_joint(jnts):
-    """ Orient joint chain exceeding Maya's default behaviour
+    """
+    Orient joint chain exceeding Maya's default behaviour
 
-    :param jnts: list or single
+    :param jnts: list or str, joint(s)
     """
 
     if type(jnts) == 'list':
@@ -107,13 +101,14 @@ def orient_joint(jnts):
 
 
 def clear_joint_orientation(root):
-    """ Clear out all joints' rotation to zero but keep weight
+    """
+    Clear out all joints' rotation to zero but keep weight
 
-    :param root: scene object
+    :param root: str. scene object
     """
 
     # get all joint orientation from root
-    jnts = get_hierarchy_of_type(root, 'joint')
+    jnts = outliner.get_hierarchy_of_type(root, 'joint')
 
     non_zero_jnts = []
     for jnt in jnts:
