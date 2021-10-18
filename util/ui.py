@@ -37,3 +37,47 @@ def set_import_path(title='Import', default_path='C:/', file_type='*'):
         filter=file_type)[0]
 
     return path
+
+
+def prompt_message_log(message, ltype='error', title=''):
+    """
+    Activate a message box prompt with one confirm button
+
+    :param message: str. custom message
+    :param ltype: str ('error' or 'info'). type of the log
+    :param title: str. message box title
+    :return: widget instance
+    """
+
+    icon = None
+    if ltype == 'error':
+        icon = QtWidgets.QMessageBox.Critical
+    elif ltype == 'info':
+        icon = QtWidgets.QMessageBox.Information
+
+    msg_box = QtWidgets.QMessageBox()
+    msg_box.setWindowTitle(title)
+    msg_box.setText(message)
+    msg_box.setStandardButtons(QtWidgets.QMessageBox.Ok)
+    msg_box.setIcon(icon)
+
+    return msg_box.exec_()
+
+
+def prompt_message_choose(message, title=''):
+    """
+    Activate a message box prompt for user to choose
+
+    :param message: str. custom message
+    :param title: str. message box title
+    :return: QtWidgets.QMessageBox.Yes or No. user's choice
+    """
+
+    msg_box = QtWidgets.QMessageBox()
+    msg_box.setIcon(QtWidgets.QMessageBox.Question)
+    msg_box.setWindowTitle(title)
+    msg_box.setText(message)
+    msg_box.setStandardButtons(QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+    user_choice = msg_box.exec_()
+    return user_choice
+
