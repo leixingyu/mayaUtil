@@ -1,4 +1,41 @@
 import maya.cmds as cmds
+from maya import OpenMaya as om
+
+
+def get_dag_path(node=None):
+    selection = om.MSelectionList()
+    selection.add(node)
+    dag_path = om.MDagPath()
+    selection.getDagPath(0, dag_path)
+    return dag_path
+
+
+def get_point_on_curve(curve, sample):
+    """
+    Get point info on nurbs curve with uniform distance
+    https://help.autodesk.com/view/MAYAUL/2018/ENU/?guid=__cpp_ref_class_m_fn_nurbs_curve_html
+
+    :param curve: str. nurbs curve name
+    :param sample: int. how many points to sample
+    :return: tuple. om.MPoint object and om.MVector object
+    """
+
+    from utility.algorithm import algorithm
+    plists = algorithm.get_percentages(sample)
+
+    points = list()
+    normals = list()
+    crv_fn = om.MFnNurbsCurve(get_dag_path(curve))
+    for percentage in plists:
+        parameter = crv_fn.findParamFromLength(crv_fn.length() * percentage)
+        point = om.MPoint()
+        crv_fn.getPointAtParam(parameter, point)
+        normal = crv_fn.normal(parameter)
+
+        points.append(point)
+        normals.append(normal)
+
+    return points, normals
 
 
 def check_duplicates(enable_rename=True):
@@ -93,6 +130,7 @@ def make_curve_by_text(text, name, font='MS Gothic'):
 def mirror_locator():
     """
     Mirrors locators from Left side to Right side
+    TODO: rework this
     """
 
     selection = cmds.ls(selection=True)
