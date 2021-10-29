@@ -1,5 +1,4 @@
 import maya.cmds as cmds
-from maya import OpenMaya as om
 
 
 def get_dag_path(node=None):
@@ -8,34 +7,6 @@ def get_dag_path(node=None):
     dag_path = om.MDagPath()
     selection.getDagPath(0, dag_path)
     return dag_path
-
-
-def get_point_on_curve(curve, sample):
-    """
-    Get point info on nurbs curve with uniform distance
-    https://help.autodesk.com/view/MAYAUL/2018/ENU/?guid=__cpp_ref_class_m_fn_nurbs_curve_html
-
-    :param curve: str. nurbs curve name
-    :param sample: int. how many points to sample
-    :return: tuple. om.MPoint object and om.MVector object
-    """
-
-    from utility.algorithm import algorithm
-    plists = algorithm.get_percentages(sample)
-
-    points = list()
-    normals = list()
-    crv_fn = om.MFnNurbsCurve(get_dag_path(curve))
-    for percentage in plists:
-        parameter = crv_fn.findParamFromLength(crv_fn.length() * percentage)
-        point = om.MPoint()
-        crv_fn.getPointAtParam(parameter, point)
-        normal = crv_fn.normal(parameter)
-
-        points.append(point)
-        normals.append(normal)
-
-    return points, normals
 
 
 def check_duplicates(enable_rename=True):
@@ -91,40 +62,6 @@ def is_name_unique(obj):
         return 0
     else:
         return 1
-
-
-def make_curve_by_text(text, name, font='MS Gothic'):
-    """
-    Make a controller out of text
-    
-    :param text: str. the text used for generate controller shape
-    :param name: str. name of the controller
-    :param font: str. font used for the text
-    :return: str. controller transform
-    """
-
-    temp = cmds.group(em=True)
-    ctrl = cmds.group(em=True, name=name)
-
-    curve = cmds.textCurves(text=text, font=font)
-    curve_shapes = cmds.listRelatives(curve, ad=True)
-    for shape in curve_shapes:
-        if cmds.nodeType(shape) == 'nurbsCurve':
-            cmds.parent(shape, temp, absolute=True, shape=True)
-    cmds.delete(curve)
-
-    curve_shapes = cmds.listRelatives(temp, children=True)
-    for transform in curve_shapes:
-        cmds.makeIdentity(transform, apply=True, t=1, r=1, s=1)
-
-    curve_shapes = cmds.listRelatives(temp, ad=True)
-    for shape in curve_shapes:
-        if cmds.nodeType(shape) == 'nurbsCurve':
-            cmds.parent(shape, ctrl, relative=True, shape=True)
-    cmds.delete(temp)
-    cmds.select(clear=True)
-
-    return ctrl
 
 
 def mirror_locator():

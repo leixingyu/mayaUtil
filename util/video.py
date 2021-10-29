@@ -1,11 +1,13 @@
 import os
 import tempfile
-import ffmpeg
+#mport ffmpeg
 import subprocess
+
+import maya.cmds as cmds
 
 """
 Can be used through convert_video() or use it like this to connect multiple
-sequences located in seperated folder hierearchy
+sequences located in separated folder hierarchy
 
 #------ USAGE EXAMPLE ------ #
 dir_a = r'C:\project1\scene1\sequence1'
@@ -146,10 +148,10 @@ class VideoConverter(object):
 def frame_to_timecode(frame_number, frame_rate):
     """
     Convert frames into timecode format 00:00:00.0.
-    Specificaly, the last digit set is a float for seconds --> 00:00:00.0
+    Specifically, the last digit set is a float for seconds --> 00:00:00.0
 
-    :param frames: int. Frame number to convert to timecode.
-    :param rate: float. Frame rate to solve timecode base. 30fps or 24 fps.
+    :param frame_number: int. Frame number to convert to timecode.
+    :param frame_rate: float. Frame rate to solve timecode base. 30fps or 24 fps.
     :return: str. Converted timecode output in format 00:00:00.0
     """
 
@@ -219,3 +221,28 @@ def convert_video(input_path, output_path):
     if os.path.isfile(output_path):
         os.remove(output_path)
     vc.export(output_path, frame_rate=30)
+
+
+def take_maya_screenshot(path, name):
+    file_name = '%s.jpg' % name
+    full_path = os.path.join(path, file_name)
+
+    if cmds.ls(selection=True):
+        cmds.select(clear=True)
+        cmds.selectMode(object=True)
+
+    cmds.viewFit()
+    cmds.setAttr('defaultRenderGlobals.imageFormat', 8)
+    cmds.playblast(
+        completeFilename=full_path,
+        st=1,
+        et=1,
+        format='image',
+        forceOverwrite=True,
+        w=600,
+        h=600,
+        showOrnaments=False,
+        viewer=False
+    )
+
+    return full_path

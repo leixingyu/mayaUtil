@@ -144,7 +144,8 @@ def delete_hierarchy_shape(roots):
 def get_shape_from_transform(
         transform,
         enable_result_only=True,
-        check_unique_child=True):
+        check_unique_child=True
+):
     """
     Get shape nodes under the transform
 
