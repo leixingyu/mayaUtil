@@ -10,8 +10,6 @@ def create_export_node(attrs, node_name):
     :param node_name: str. the name of the temp node
     :return: str. the node object
     """
-    """  """
-
     node = cmds.createNode('network', name=node_name)
     cmds.select(node)
 
@@ -36,12 +34,11 @@ def export_attr_to_atom(fpath, start, end):
     :param start: int. start frame
     :param end: int. end frame
     """
-
     cmds.file(
         fpath,
         type="atomExport",
-        force=True,  # Overwrite
-        exportSelected=True,
+        force=1,  # Overwrite
+        exportSelected=1,
         options=(
             "precision=8;"
             "statics=1;"
@@ -62,7 +59,8 @@ def export_attr_to_atom(fpath, start, end):
             "-animation objects"
             "-option keys"
             "-hierarchy none"
-            "-controlPoints 0").format(start=start, end=end)
+            "-controlPoints 0"
+        ).format(start=start, end=end)
     )
 
 
@@ -73,11 +71,10 @@ def import_attr_from_atom(fpath, target):
     :param fpath: str. file path
     :param target: str. maya object
     """
-
     cmds.select(target)
     cmds.file(
         fpath,
-        i=True,
+        i=1,
         type="atomImport",
         options=(
             "targetTime=3;"

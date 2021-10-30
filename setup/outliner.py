@@ -9,7 +9,6 @@ def get_root_node(obj, type_specified=None):
     :param type_specified: str. restrict the root node type
     :return: str. the root scene object
     """
-
     root = None
 
     # check current node
@@ -41,7 +40,6 @@ def get_hierarchy_of_type(root, type_specified):
     :param type_specified: str. object type
     :return: list. object of the specified type
     """
-
     obj_list = []
     children = cmds.listRelatives(root, children=1)
     if not children:
@@ -67,7 +65,6 @@ def delete_hierarchy_except_type(roots, type_specified):
     :param roots: list or str. scene obj
     :param type_specified: str. object type
     """
-
     if not isinstance(roots, list):
         roots = [roots]
 
@@ -82,8 +79,7 @@ def delete_hierarchy_except_type(roots, type_specified):
             for child in children:
                 # the child is not top object or different type, re-parent
                 if not cmds.objectType(root_obj, isType=type_specified):
-                    cmds.parent(child,
-                                cmds.listRelatives(root_obj, parent=1))
+                    cmds.parent(child, cmds.listRelatives(root_obj, parent=1))
                 delete_hierarchy_except_type(child, type_specified)
 
             # children moved under another parent, delete original parent
@@ -100,7 +96,6 @@ def delete_hierarchy_except_node(roots, type_specified):
     :param roots: list or str. scene obj
     :param type_specified: str. object type
     """
-
     if not isinstance(roots, list):
         roots = [roots]
 
@@ -130,7 +125,6 @@ def delete_hierarchy_shape(roots):
 
     :param roots: list or str. scene object
     """
-
     if not isinstance(roots, list):
         roots = [roots]
 
@@ -143,8 +137,8 @@ def delete_hierarchy_shape(roots):
 
 def get_shape_from_transform(
         transform,
-        enable_result_only=True,
-        check_unique_child=True
+        enable_result_only=1,
+        check_unique_child=1
 ):
     """
     Get shape nodes under the transform
@@ -154,7 +148,6 @@ def get_shape_from_transform(
     :param check_unique_child: bool. check if transform has multiple shapes
     :return: list. the shape node
     """
-
     shapes = cmds.listRelatives(transform, shapes=1)
     shapes_result = [shape for shape in shapes if 'Orig' not in shape]
 
@@ -177,7 +170,6 @@ def batch_parent(obj_list, parent):
     :param obj_list: list, children objects
     :param parent: str. parent object
     """
-
     for item in obj_list:
         cmds.parent(item, parent, relative=False)
 
@@ -188,7 +180,6 @@ def hierarchical_parent(obj_list):
 
     :param obj_list: objects to parent in order
     """
-
     for index, item in enumerate(obj_list):
         if obj_list[index] != obj_list[-1]:
             cmds.parent(obj_list[index], obj_list[index+1])

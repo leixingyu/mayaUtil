@@ -9,7 +9,6 @@ def get_attrs_channel(node):
     :param node: str. maya node name (cannot be a blendshape node)
     :return: list. attributes
     """
-
     attributes = list()
 
     attrs = cmds.listAttr(node)
@@ -31,7 +30,6 @@ def get_attrs_selected():
 
     :return: list. full name of selected attributes
     """
-
     selections = cmds.ls(selection=1)
     channels = cmds.channelBox(
         'mainChannelBox',
@@ -52,7 +50,6 @@ def restore_channel(obj):
 
     :param obj: str. scene object
     """
-
     kwargs = {
         'lock': 0,
         'keyable': 1,
@@ -69,7 +66,6 @@ def reset_attrs():
     """
     Reset selected attributes to default values
     """
-
     selected_channels = cmds.channelBox(
         'mainChannelBox',
         selectedMainAttributes=1,
@@ -91,9 +87,9 @@ def reset_attrs():
         for channel in selected_channels:
             attribute = "{0}.{1}".format(selection, channel)
             if not cmds.getAttr(attribute, lock=1):
-                defaultValue = cmds.attributeQuery(channel, node=selection, listDefault=1)
-                if defaultValue:
-                    cmds.setAttr(attribute, defaultValue[0])
+                default_value = cmds.attributeQuery(channel, node=selection, listDefault=1)
+                if default_value:
+                    cmds.setAttr(attribute, default_value[0])
 
 
 def get_attrs_unbinded(node):
@@ -103,7 +99,6 @@ def get_attrs_unbinded(node):
     :param node: str. maya container node
     :return: list. attribute names
     """
-
     if cmds.container(node, isContainer=1, q=1):
         container = node
     else:
@@ -115,13 +110,12 @@ def get_attrs_unbinded(node):
 
 def connect_weighted(source, destination, ratio):
     """
-    Weighted connection using expresssion
+    Weighted connection using expression
 
     :param source: str. source attribute
     :param destination: str. destination attribute
     :param ratio: float. weighting ratio between connection
     """
-
     try:
         cmds.expression(
             string='{}={}*{}'.format(destination, source, ratio),
@@ -143,7 +137,6 @@ def connect_drivenkey(source, src_min, src_max, destination, dst_min, dst_max):
     :param dst_min: float. driven minimum value
     :param dst_max: float. driven maximum value
     """
-
     driven = destination.split('.')[0]
     attribute = destination.split('.')[-1]
 
@@ -167,14 +160,13 @@ def connect_drivenkey(source, src_min, src_max, destination, dst_min, dst_max):
         raise e
 
 
-# source: https://discourse.techart.online/t/cbdeleteconnection-in-python/1179
 def delete_connection(attr):
     """
     Break attribute connection: equivalent to channelbox break connection
+    source: https://discourse.techart.online/t/cbdeleteconnection-in-python/1179
 
     :param attr: str. attribute name
     """
-
     if cmds.connectionInfo(attr, isDestination=1):
         attr = cmds.connectionInfo(attr, getExactDestination=1)
         is_readonly = cmds.ls(attr, ro=1)
@@ -193,7 +185,6 @@ def validate_connection(attribute):
     :param attribute: str. attribute full name
     :return: list, [bool, string]. validation result and message
     """
-
     obj, channel = attribute.split('.')
 
     if '.' not in attribute:

@@ -10,7 +10,6 @@ def set_export_path(title='Export', default_path='C:/', file_type='*'):
     :param file_type: str. file filter pattern
     :return: str. export folder full path
     """
-
     path = QtWidgets.QFileDialog.getSaveFileName(
         None,
         title,
@@ -29,7 +28,6 @@ def set_import_path(title='Import', default_path='C:/', file_type='*'):
     :param file_type: str. file filter pattern
     :return: str. import file full path
     """
-
     path = QtWidgets.QFileDialog.getOpenFileName(
         None,
         title,
@@ -48,7 +46,6 @@ def prompt_message_log(message, ltype='error', title=''):
     :param title: str. message box title
     :return: widget instance
     """
-
     icon = None
     if ltype == 'error':
         icon = QtWidgets.QMessageBox.Critical
@@ -72,7 +69,6 @@ def prompt_message_choose(message, title=''):
     :param title: str. message box title
     :return: QtWidgets.QMessageBox.Yes or No. user's choice
     """
-
     msg_box = QtWidgets.QMessageBox()
     msg_box.setIcon(QtWidgets.QMessageBox.Question)
     msg_box.setWindowTitle(title)

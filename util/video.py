@@ -1,6 +1,10 @@
+import logging
 import os
 import tempfile
-#mport ffmpeg
+try:
+    import ffmpeg
+except ImportError:
+    logging.error('third-party ffmpeg failure')
 import subprocess
 
 import maya.cmds as cmds
@@ -29,11 +33,8 @@ class Sequence(object):
 
     def __init__(self, folder):
         """
-        Initialization
-
         :param folder: str. folder containing all the images to make sequence
         """
-
         self._folder = folder
         self._sequence = self._as_image_sequence()
 
@@ -94,11 +95,10 @@ class VideoConverter(object):
         file 'C:/test02/test02-00899.jpg'
         file 'C:/test02/test02-00900.jpg'
         """
-
         # create temp demuxer and dump sequence info
         temp_dir = tempfile.mkdtemp(prefix='project_')
         temp_file = tempfile.NamedTemporaryFile(
-            delete=False,
+            delete=0,
             dir=temp_dir,
             prefix='project_',
             suffix='.txt'
@@ -131,7 +131,7 @@ class VideoConverter(object):
             )
         output, error = combine_process.communicate()
 
-        # remove temp demuxer after convertion
+        # remove temp demuxer after conversion
         os.remove(temp_file.name)
         os.rmdir(temp_dir)
 
@@ -139,10 +139,10 @@ class VideoConverter(object):
             attach_audio(output_path, frame_rate, audio_file, audio_start)
 
         if not error:
-            print(output)
+            logging.info(output)
             self._output_dir = output_path
         else:
-            print(error)
+            logging.info(error)
 
 
 def frame_to_timecode(frame_number, frame_rate):
@@ -154,7 +154,6 @@ def frame_to_timecode(frame_number, frame_rate):
     :param frame_rate: float. Frame rate to solve timecode base. 30fps or 24 fps.
     :return: str. Converted timecode output in format 00:00:00.0
     """
-
     remaining_frames = frame_number
     hours = remaining_frames / (frame_rate * 60 * 60)
     remaining_frames %= frame_rate * 60 * 60
@@ -179,7 +178,6 @@ def attach_audio(output_path, frame_rate, audio_file, audio_start):
     :param audio_start: str. start time value to offset audio from video.
     :return: (str, str). subprocess stdout and stderr.
     """
-
     timecode = frame_to_timecode(int(audio_start), frame_rate)
     temp_mov = '{0}\\vid.mov'.format(os.path.dirname(output_path))
     offset_cmds = [
@@ -214,7 +212,6 @@ def convert_video(input_path, output_path):
     :param input_path: str. input directory full path
     :param output_path: str. output directory full path
     """
-
     sequences = [Sequence(path).sequence for path in input_path]
     vc = VideoConverter(*sequences)
 
@@ -224,12 +221,18 @@ def convert_video(input_path, output_path):
 
 
 def take_maya_screenshot(path, name):
+    """
+    Take a screenshot in maya viewport
+    :param path: str. output directory
+    :param name: str. name of the screenshot
+    :return: str. full path to the screenshot
+    """
     file_name = '%s.jpg' % name
     full_path = os.path.join(path, file_name)
 
-    if cmds.ls(selection=True):
-        cmds.select(clear=True)
-        cmds.selectMode(object=True)
+    if cmds.ls(selection=1):
+        cmds.select(clear=1)
+        cmds.selectMode(object=1)
 
     cmds.viewFit()
     cmds.setAttr('defaultRenderGlobals.imageFormat', 8)
@@ -238,11 +241,11 @@ def take_maya_screenshot(path, name):
         st=1,
         et=1,
         format='image',
-        forceOverwrite=True,
+        forceOverwrite=1,
         w=600,
         h=600,
-        showOrnaments=False,
-        viewer=False
+        showOrnaments=0,
+        viewer=0
     )
 
     return full_path

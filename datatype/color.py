@@ -6,15 +6,15 @@ class ColorRGB(object):
         self._b = b
 
     @classmethod
-    def Red(cls):
+    def red(cls):
         return cls(r=255, g=0, b=0)
 
     @classmethod
-    def Green(cls):
+    def green(cls):
         return cls(r=0, g=255, b=0)
 
     @classmethod
-    def Blue(cls):
+    def blue(cls):
         return cls(r=0, g=0, b=255)
 
     @property

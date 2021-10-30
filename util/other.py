@@ -1,4 +1,7 @@
+import re
+
 import maya.cmds as cmds
+from maya import OpenMaya as om
 
 
 def get_dag_path(node=None):
@@ -9,18 +12,16 @@ def get_dag_path(node=None):
     return dag_path
 
 
-def check_duplicates(enable_rename=True):
+def check_duplicates(enable_rename=1):
     """
     Find all duplicated short names in scene and rename them
 
     :param enable_rename: bool, allow renaming for duplicated names
     """
-
-    import re
     # Find all objects that have the same short name as another by find '|'
     duplicates = [f for f in cmds.ls() if '|' in f]
     # Sort them by hierarchy so no parent is renamed before a child.
-    duplicates.sort(key=lambda obj: obj.count('|'), reverse=True)
+    duplicates.sort(key=lambda obj: obj.count('|'), reverse=1)
 
     if not duplicates:
         print("No Duplicates")
@@ -40,7 +41,7 @@ def check_duplicates(enable_rename=True):
             # add '#' as the suffix, maya will find the next available number
             new_name = cmds.rename(name, '{}#'.format(suffix))
             print("renamed {} to {}".format(name, new_name))
-            check_duplicates(enable_rename=True)
+            check_duplicates(enable_rename=1)
         else:
             print("Found Duplicates")
 
@@ -54,9 +55,9 @@ def is_name_unique(obj):
     """
     short_name = obj.split('|')
     try:
-        long_names = cmds.ls(short_name[-1], l=True)
+        long_names = cmds.ls(short_name[-1], l=1)
     except:
-        long_names = cmds.ls('*{}'.format(short_name[-1]), l=True)
+        long_names = cmds.ls('*{}'.format(short_name[-1]), l=1)
 
     if len(long_names) > 1:
         return 0
@@ -69,13 +70,12 @@ def mirror_locator():
     Mirrors locators from Left side to Right side
     TODO: rework this
     """
-
-    selection = cmds.ls(selection=True)
+    selection = cmds.ls(selection=1)
     if not selection:
         raise RuntimeError("no locator selected")
     else:
-        cmds.select(selection, hi=True)
-        left_locs = cmds.ls(selection=True, transforms=True)
+        cmds.select(selection, hi=1)
+        left_locs = cmds.ls(selection=1, transforms=1)
         right_locs = [loc.replace('_L_', '_R_') for loc in left_locs]
 
         if len(left_locs) == len(right_locs):

@@ -11,7 +11,6 @@ def create_dir(name):
     :param name: str. name of the folder
     :return: str. full path of the folder
     """
-
     # local work dir
     scene_fullpath = cmds.file(sceneName=1, q=1)
     scene_path = os.path.dirname(scene_fullpath)
@@ -34,7 +33,6 @@ def copy_file(src_path, dst_path):
     :param src_path: str. source file full path
     :param dst_path: str. destination folder full path
     """
-
     if not os.path.isfile(src_path):
         print('file not located')
         return

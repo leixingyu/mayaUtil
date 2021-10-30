@@ -12,7 +12,6 @@ def get_model_panels():
 
     :return: list. model panel names
     """
-
     panels = cmds.getPanel(vis=1)
     model_panels = [panel
                         for panel in panels
@@ -27,7 +26,6 @@ def show_polymesh_only(model_panels=None):
 
     :param model_panels: list. model panels, defaults to None
     """
-
     if not model_panels:
         model_panels = get_model_panels()
 
@@ -42,7 +40,6 @@ def switch_renderer(renderer, model_panels=None):
     :param renderer: str. renderer name
     :param model_panels: list. model panels
     """
-
     if not model_panels:
         model_panels = get_model_panels()
 
@@ -58,7 +55,6 @@ def switch_camera(camera, model_panels=None):
     :param camera: str. camera name
     :param model_panels: list. model panels
     """
-
     if not model_panels:
         model_panels = get_model_panels()
 
@@ -74,7 +70,6 @@ def viewport_off(func):
     Decorator - turn off Maya display while func is running.
     if func will fail, the error will be raised after.
     """
-
     @wraps(func)
     def wrap(*args, **kwargs):
         cmds.paneLayout(PANE_NAME, manage=0, edit=1)

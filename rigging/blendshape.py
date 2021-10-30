@@ -8,7 +8,6 @@ def get_blendshape_targets(blendshape):
     :param blendshape: str. name of the blendshape node
     :return: list. all blendshape channels (aka. blendshape targets)
     """
-
     # method 1
     all_attrs = cmds.aliasAttr(blendshape, q=1)
     # This returns you a list in the form "targetName", "weight[x]"
@@ -29,7 +28,6 @@ def get_output_blendshapes(mobject):
     :param mobject: str. maya object
     :return: list. blendshape nodes
     """
-
     cmds.select(mobject)
     output_attrs = cmds.channelBox('mainChannelBox', out=1, q=1)
 
@@ -49,7 +47,6 @@ def get_input_blendshapes(mobject):
     :param mobject: str. maya object
     :return: list. blendshape nodes
     """
-
     nodes = []
     for node in cmds.listHistory(mobject):
         if cmds.nodeType(node) == 'blendShape':

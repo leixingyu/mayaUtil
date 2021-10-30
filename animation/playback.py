@@ -8,7 +8,6 @@ def get_timeline_range():
 
     :return: list, full range and truncated range
     """
-
     # maya full timeline range
     full_min = cmds.playbackOptions(animationStartTime=1, q=1)
     full_max = cmds.playbackOptions(animationEndTime=1, q=1)
@@ -26,7 +25,6 @@ def attach_audio(name):
 
     :param name: str. audio name
     """
-
     audios = cmds.ls(type='audio')
     if name in audios:
         playback_slider = mel.eval('$tmpVar=$gPlayBackSlider')

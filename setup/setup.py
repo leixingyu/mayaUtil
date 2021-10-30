@@ -15,12 +15,11 @@ def get_maya_main_window():
 
     :return: window instance, maya program window
     """
-
     main_window_ptr = maya.OpenMayaUI.MQtUtil.mainWindow()
     return wrapInstance(int(main_window_ptr), QtWidgets.QMainWindow)
 
 
-def set_window_pos(child_only=False, x=0, y=0):
+def set_window_pos(child_only=0, x=0, y=0):
     """
     Set window position of maya's widgets
 
@@ -29,12 +28,11 @@ def set_window_pos(child_only=False, x=0, y=0):
     :param x: int. window x position
     :param y: int. window y position
     """
-
     for child in get_maya_main_window().children():
         if isinstance(child, QtWidgets.QWidget) and child.isWindow():
             # set visible
             if child.isHidden():
-                child.setVisible(True)
+                child.setVisible(1)
             child.move(x, y)
 
     if not child_only:
@@ -52,7 +50,6 @@ def remove_module(module_name):
 
     :param module_name: str. name of the module
     """
-
     print('Removing {} module'.format(module_name))
 
     to_delete = []
@@ -70,7 +67,6 @@ def manage_references():
 
     :return: list. reference path
     """
-
     ref_nodes = cmds.ls(type='reference')
     ref_paths = list()
     for ref_node in ref_nodes:
@@ -88,14 +84,13 @@ def manage_references():
     #    cmds.file(path, unloadReference=1)
 
 
-def toggle_layer(layer_sig='*:Layer', is_viz=True):
+def toggle_layer(layer_sig='*:Layer', is_viz=1):
     """
     Toggle on or off layer
 
     :param layer_sig: str. pattern used to filter layer, defaults to '*:Layer'
     :param is_viz: bool. visible or not, defaults to True
     """
-
     layers = cmds.ls(layer_sig)
     for layer in layers:
         cmds.setAttr('{}.visibility'.format(layer), is_viz)
@@ -110,7 +105,6 @@ def load_plugin(name):
 
     :param name: str. plugin name
     """
-
     if not cmds.pluginInfo(name, loaded=1, q=1):
         cmds.loadPlugin(name)
 
@@ -119,8 +113,7 @@ def save_preference():
     """
     Save the script editor and default prefs
     """
-
-    # the script editor needs to be open, otherwise tabs will be destoried
+    # the script editor needs to be open, otherwise tabs will be destroyed
     cmd = '''
     ScriptEditor;
     syncExecuterBackupFiles();

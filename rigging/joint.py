@@ -9,7 +9,6 @@ def get_skin_from_joint(jnt):
     :param jnt: str. single jnt, preferably jnt root
     :return: list. mesh transforms
     """
-
     cls = cmds.listConnections(jnt, type='skinCluster')
     cls = list(set(cls))
 
@@ -27,7 +26,6 @@ def get_joint_from_skin(mesh):
     :param mesh: str. scene object, could be transform or shape
     :return: list. joints
     """
-
     if cmds.objectType(mesh, isType='transform'):
         mesh = outliner.get_shape_from_transform(mesh)
     elif cmds.objectType(mesh, isType='mesh'):
@@ -51,7 +49,6 @@ def enable_joint_visibility(roots):
 
     :param roots: list or str. joint roots
     """
-
     if not isinstance(roots, list):
         roots = [roots]
 
@@ -82,7 +79,6 @@ def orient_joint(jnts):
 
     :param jnts: list or str, joint(s)
     """
-
     if type(jnts) == 'list':
         for jnt in jnts:
             cmds.select(jnt, add=True)
@@ -106,7 +102,6 @@ def clear_joint_orientation(root):
 
     :param root: str. scene object
     """
-
     # get all joint orientation from root
     jnts = outliner.get_hierarchy_of_type(root, 'joint')
 

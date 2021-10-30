@@ -7,7 +7,15 @@ from utility.setup import outliner
 from utility.util import other
 
 
-def color(crv, r, g, b):
+def colorize(crv, r, g, b):
+    """
+    Colorize the curve
+
+    :param crv: str. nurbs curve
+    :param r: float. normalized red channel value
+    :param g: float. normalized green channel value
+    :param b: float. normalized blue channel value
+    """
     if cmds.nodeType(crv) != 'transform':
         return
 
@@ -20,10 +28,10 @@ def merge_curves(name, curves=None):
     """
     Merge separate nurbs curve under one transform for easy selection
 
+    :param name: str. parent node name
     :param curves: list. list of curves to merge
     :return: str. transform node
     """
-
     # by default, selection in viewport are transform nodes
     if not curves:
         curves = cmds.ls(selection=1)
