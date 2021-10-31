@@ -5,6 +5,7 @@ from maya import OpenMaya as om
 
 from utility.setup import outliner
 from utility.util import other
+from utility.algorithm import algorithm
 
 
 def colorize(crv, r, g, b):
@@ -39,10 +40,12 @@ def merge_curves(name, curves=None):
     for curve in curves:
         if cmds.nodeType(curve) != 'transform':
             logging.error('Merge fail, %s not transform node', curve)
+            return False
 
     shapes = []
     for transform in curves:
         shape = outliner.get_shape_from_transform(transform, check_unique_child=0)
+        cmds.makeIdentity(transform, apply=1, r=1, t=1, s=1)
         shapes.extend(shape)
 
     parent = cmds.createNode('transform', n=name)
@@ -95,7 +98,6 @@ def get_point_on_curve(curve, sample):
     :return: tuple. om.MPoint object and om.MVector object
     """
 
-    from utility.algorithm import algorithm
     plists = algorithm.get_percentages(sample)
 
     points = list()

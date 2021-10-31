@@ -43,3 +43,13 @@ def copy_file(src_path, dst_path):
         return
 
     shutil.copy(src_path, dst_path)
+
+
+def get_files(path):
+    """
+    Return only files not directories inside a directory
+
+    :param path: str. root directory for searching
+    :return: list. list of files in that directory
+    """
+    return [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
