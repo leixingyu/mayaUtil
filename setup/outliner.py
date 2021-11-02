@@ -32,6 +32,26 @@ def get_root_node(obj, type_specified=None):
     return root
 
 
+def get_all_under_hierarchy(root):
+    """
+    Get all children in the hierarchy of a root (excluding the root)
+
+    :param root: str. single scene object
+    :return: list. children and grand children of the root
+    """
+    children = list()
+
+    direct_children = cmds.listRelatives(root, children=1)
+
+    if direct_children:
+        children.extend(direct_children)
+
+        for child in direct_children:
+            children.extend(get_all_under_hierarchy(child))
+
+    return children
+
+
 def get_hierarchy_of_type(root, type_specified):
     """
     Get all children (excluding root) in hierarchy of a certain type
@@ -40,22 +60,11 @@ def get_hierarchy_of_type(root, type_specified):
     :param type_specified: str. object type
     :return: list. object of the specified type
     """
-    obj_list = []
-    children = cmds.listRelatives(root, children=1)
-    if not children:
-        # the root is already at the top
-        if cmds.objectType(root, isType=type_specified):
-            obj_list.append(root)
-    else:
-        # the current object has children
-        for child in children:
-            if cmds.objectType(child, isType=type_specified):
-                obj_list.append(child)
-                obj_list += get_hierarchy_of_type(child, type_specified)
-
-    return obj_list
+    children = get_all_under_hierarchy(root)
+    return cmds.ls(children, type=type_specified)
 
 
+# TODO: combine the following two functions into one
 def delete_hierarchy_except_type(roots, type_specified):
     """
     Delete all other types of objects under hierarchy of root
@@ -71,7 +80,7 @@ def delete_hierarchy_except_type(roots, type_specified):
     for root_obj in roots:
         children = cmds.listRelatives(root_obj, children=1)
         if not children:
-            # the current object is the top object
+            # the current object is at top
             if not cmds.objectType(root_obj, isType=type_specified):
                 cmds.delete(root_obj)
         else:
@@ -138,8 +147,7 @@ def delete_hierarchy_shape(roots):
 def get_shape_from_transform(
         transform,
         enable_result_only=1,
-        check_unique_child=1
-):
+        check_unique_child=1):
     """
     Get shape nodes under the transform
 

@@ -103,5 +103,3 @@ class ColorRGB(object):
     def b_normalized(self):
         return self._b/255.00
 
-
-c = ColorRGB(255, 1000, 2)

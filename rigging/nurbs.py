@@ -8,9 +8,22 @@ from utility.util import other
 from utility.algorithm import algorithm
 
 
-def colorize(crv, r, g, b):
+def colorize_rgb(crv, r, g, b):
     """
-    Colorize the curve
+    Colorize the nurbs curve
+
+    :param crv: str. nurbs curve
+    :param r: float. red channel value
+    :param g: float. green channel value
+    :param b: float. blue channel value
+    """
+
+    colorize_rgb_normalized(crv, r/255.0, g/255.0, b/255.0)
+
+
+def colorize_rgb_normalized(crv, r, g, b):
+    """
+    Colorize the nurbs curve
 
     :param crv: str. nurbs curve
     :param r: float. normalized red channel value
@@ -30,7 +43,7 @@ def merge_curves(name, curves=None):
     Merge separate nurbs curve under one transform for easy selection
 
     :param name: str. parent node name
-    :param curves: list. list of curves to merge
+    :param curves: list. list of curve transforms
     :return: str. transform node
     """
     # by default, selection in viewport are transform nodes
