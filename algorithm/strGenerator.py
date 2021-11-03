@@ -4,6 +4,9 @@ import string
 
 """
 A temporary string generator for purpose like creating temp name
+
+s = StrGenerator()
+temp_string = s.tmp
 """
 
 
