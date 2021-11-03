@@ -63,6 +63,7 @@ def merge_curves(name, curves=None):
 
     parent = cmds.createNode('transform', n=name)
     cmds.parent(shapes, parent, s=1, r=1)
+    cmds.delete(parent, constructionHistory=1)
 
     return parent
 
