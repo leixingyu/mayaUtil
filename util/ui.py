@@ -1,4 +1,4 @@
-from utility._vendor.Qt import QtWidgets
+from Qt import QtWidgets
 
 
 def set_export_path(title='Export', default_path='C:/', file_type='*'):

@@ -3,10 +3,10 @@ import logging
 import maya.cmds as cmds
 from maya import OpenMaya as om
 
-from utility.rigging.transform import colorize_rgb_normalized
-from utility.setup import outliner
-from utility.util import other
-from utility.algorithm import algorithm
+from ..rigging.transform import colorize_rgb_normalized
+from ..setup import outliner
+from ..util import other
+from ..algorithm import algorithm
 
 
 def colorize_rgb(crv, r, g, b):

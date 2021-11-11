@@ -1,6 +1,6 @@
 import maya.cmds as cmds
 
-from utility.setup import outliner
+from ..setup import outliner
 
 
 def colorize_rgb_normalized(node, r, g, b):

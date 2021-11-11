@@ -1,7 +1,7 @@
 import maya.cmds as cmds
 
-from utility.setup import outliner
-from utility.datatype import vector
+from ..setup import outliner
+from ..datatype import vector
 
 
 def get_skin_from_joint(jnt):

@@ -7,7 +7,7 @@ import maya.OpenMayaUI
 import maya.cmds as cmds
 import maya.mel as mel
 
-from utility._vendor.Qt import QtWidgets
+from Qt import QtWidgets
 
 
 def get_maya_main_window():
