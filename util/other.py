@@ -90,5 +90,3 @@ def mirror_locator():
                 cmds.setAttr('{}.rz'.format(right_locs[i]), -rotation[0][2])
         else:
             raise RuntimeError("left and right locators not match")
-
-

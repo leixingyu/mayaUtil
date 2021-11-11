@@ -1,5 +1,7 @@
 import maya.cmds as cmds
+
 from utility.setup import outliner
+from utility.datatype import vector
 
 
 def get_skin_from_joint(jnt):
@@ -94,6 +96,24 @@ def orient_joint(jnts):
                     cmds.setAttr('{}.{}'.format(child, attr), 0)
     else:
         cmds.joint(e=True, oj='xyz', zso=True)  # why zso matters
+
+
+def set_prefer_angle(jnt, vec=None):
+    """
+    Setting preferred angle for joints that are aligned,
+    adjust joints to rotate on designated axis an arbitrary angle and revert it
+
+    :param jnt: str. target joint
+    :param vec: Vector. preferred angle for pole vector
+    """
+    if vec is None:
+        vec = [0, 0, 1]
+    v = vector.Vector(vec)
+    offset = 20
+
+    cmds.rotate(v.x * offset, v.y * offset, v.z * offset, jnt, relative=1)
+    cmds.joint(jnt, edit=1, ch=1, setPreferredAngles=1)
+    cmds.rotate(v.x * -offset, v.y * -offset, v.z * -offset, jnt, relative=1)
 
 
 def clear_joint_orientation(root):

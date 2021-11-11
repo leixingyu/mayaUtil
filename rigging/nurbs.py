@@ -3,6 +3,7 @@ import logging
 import maya.cmds as cmds
 from maya import OpenMaya as om
 
+from utility.rigging.transform import colorize_rgb_normalized
 from utility.setup import outliner
 from utility.util import other
 from utility.algorithm import algorithm
@@ -17,25 +18,7 @@ def colorize_rgb(crv, r, g, b):
     :param g: float. green channel value
     :param b: float. blue channel value
     """
-
-    colorize_rgb_normalized(crv, r/255.0, g/255.0, b/255.0)
-
-
-def colorize_rgb_normalized(crv, r, g, b):
-    """
-    Colorize the nurbs curve
-
-    :param crv: str. nurbs curve
-    :param r: float. normalized red channel value
-    :param g: float. normalized green channel value
-    :param b: float. normalized blue channel value
-    """
-    if cmds.nodeType(crv) != 'transform':
-        return
-
-    cmds.setAttr('{}.overrideEnabled'.format(crv), 1)
-    cmds.setAttr('{}.overrideRGBColors'.format(crv), 1)
-    cmds.setAttr('{}.overrideColorRGB'.format(crv), r, g, b)
+    colorize_rgb_normalized(crv, r / 255.0, g / 255.0, b / 255.0)
 
 
 def merge_curves(name, curves=None):
@@ -77,7 +60,6 @@ def make_curve_by_text(text, name, font='MS Gothic'):
     :param font: str. font used for the text
     :return: str. controller transform
     """
-
     temp = cmds.group(em=True)
     ctrl = cmds.group(em=True, name=name)
 
@@ -111,7 +93,6 @@ def get_point_on_curve(curve, sample):
     :param sample: int. how many points to sample
     :return: tuple. om.MPoint object and om.MVector object
     """
-
     plists = algorithm.get_percentages(sample)
 
     points = list()
