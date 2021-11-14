@@ -6,7 +6,6 @@ from maya import OpenMaya as om
 import xutility.rigging.transform
 from ..rigging.transform import colorize_rgb_normalized
 from ..common import hierarchy
-from ..util import other
 from ..algorithm import algorithm
 
 
@@ -37,7 +36,7 @@ def merge_curves(name, curves=None):
     for curve in curves:
         if cmds.nodeType(curve) != 'transform':
             logging.error('Merge fail, %s not transform node', curve)
-            return False
+            return 0
 
     shapes = []
     for transform in curves:
@@ -47,7 +46,10 @@ def merge_curves(name, curves=None):
 
     parent = cmds.createNode('transform', n=name)
     cmds.parent(shapes, parent, s=1, r=1)
+    # delete the make curves node
     cmds.delete(parent, constructionHistory=1)
+    # delete the empty parent
+    cmds.delete(curves)
 
     return parent
 
@@ -61,28 +63,22 @@ def make_curve_by_text(text, name, font='MS Gothic'):
     :param font: str. font used for the text
     :return: str. controller transform
     """
-    temp = cmds.group(em=True)
-    ctrl = cmds.group(em=True, name=name)
+    temp = cmds.group(em=1)
 
     curve = cmds.textCurves(text=text, font=font)
-    curve_shapes = cmds.listRelatives(curve, ad=True)
+    curve_shapes = cmds.listRelatives(curve, ad=1)
     for shape in curve_shapes:
         if cmds.nodeType(shape) == 'nurbsCurve':
-            cmds.parent(shape, temp, absolute=True, shape=True)
+            cmds.parent(shape, temp, absolute=1, shape=1)
     cmds.delete(curve)
 
-    curve_shapes = cmds.listRelatives(temp, children=True)
+    curve_shapes = cmds.listRelatives(temp, children=1)
     for transform in curve_shapes:
-        cmds.makeIdentity(transform, apply=True, t=1, r=1, s=1)
-
-    curve_shapes = cmds.listRelatives(temp, ad=True)
-    for shape in curve_shapes:
-        if cmds.nodeType(shape) == 'nurbsCurve':
-            cmds.parent(shape, ctrl, relative=True, shape=True)
+        cmds.makeIdentity(transform, apply=1, t=1, r=1, s=1)
+    merge_curves(name, curves=curve_shapes)
     cmds.delete(temp)
-    cmds.select(clear=True)
 
-    return ctrl
+    return name
 
 
 def get_point_on_curve(curve, sample):
