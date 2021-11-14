@@ -13,9 +13,10 @@ def get_model_panels():
     :return: list. model panel names
     """
     panels = cmds.getPanel(vis=1)
-    model_panels = [panel
-                        for panel in panels
-                            if cmds.getPanel(typeOf=panel) == 'modelPanel']
+    model_panels = [
+        panel for panel in panels
+        if cmds.getPanel(typeOf=panel) == 'modelPanel'
+    ]
 
     return model_panels
 

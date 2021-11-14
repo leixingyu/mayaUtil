@@ -3,8 +3,9 @@ import logging
 import maya.cmds as cmds
 from maya import OpenMaya as om
 
+import xutility.rigging.transform
 from ..rigging.transform import colorize_rgb_normalized
-from ..setup import outliner
+from ..common import hierarchy
 from ..util import other
 from ..algorithm import algorithm
 
@@ -40,7 +41,7 @@ def merge_curves(name, curves=None):
 
     shapes = []
     for transform in curves:
-        shape = outliner.get_shape_from_transform(transform, check_unique_child=0)
+        shape = hierarchy.get_shape_from_transform(transform, check_unique_child=0)
         cmds.makeIdentity(transform, apply=1, r=1, t=1, s=1)
         shapes.extend(shape)
 
@@ -97,7 +98,7 @@ def get_point_on_curve(curve, sample):
 
     points = list()
     tangents = list()
-    crv_fn = om.MFnNurbsCurve(other.get_dag_path(curve))
+    crv_fn = om.MFnNurbsCurve(xutility.rigging.transform.get_dag_path(curve))
     for percentage in plists:
         parameter = crv_fn.findParamFromLength(crv_fn.length() * percentage)
         point = om.MPoint()

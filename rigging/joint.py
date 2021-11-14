@@ -1,6 +1,6 @@
 import maya.cmds as cmds
 
-from ..setup import outliner
+from ..common import hierarchy
 from ..datatype import vector
 
 
@@ -29,7 +29,7 @@ def get_joint_from_skin(mesh):
     :return: list. joints
     """
     if cmds.objectType(mesh, isType='transform'):
-        mesh = outliner.get_shape_from_transform(mesh)
+        mesh = hierarchy.get_shape_from_transform(mesh)
     elif cmds.objectType(mesh, isType='mesh'):
         pass
     else:
@@ -55,7 +55,7 @@ def enable_joint_visibility(roots):
         roots = [roots]
 
     for root in roots:
-        jnts = outliner.get_hierarchy_of_type(root, 'joint')
+        jnts = hierarchy.get_hierarchy_of_type(root, 'joint')
         for jnt in jnts:
             # visibility
             try:
@@ -123,7 +123,7 @@ def clear_joint_orientation(root):
     :param root: str. scene object
     """
     # get all joint orientation from root
-    jnts = outliner.get_hierarchy_of_type(root, 'joint')
+    jnts = hierarchy.get_hierarchy_of_type(root, 'joint')
 
     non_zero_jnts = []
     for jnt in jnts:
