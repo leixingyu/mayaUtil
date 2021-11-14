@@ -90,7 +90,7 @@ def toggle_layer(layer_sig='*:Layer', is_viz=1):
     Toggle on or off layer
 
     :param layer_sig: str. pattern used to filter layer, defaults to '*:Layer'
-    :param is_viz: bool. visible or not, defaults to True
+    :param is_viz: bool. visible or not, defaults to 1
     """
     layers = cmds.ls(layer_sig)
     for layer in layers:
@@ -134,11 +134,11 @@ def undo(func):
     def _undofunc(*args, **kwargs):
         try:
             # start an undo chunk
-            cmds.undoInfo(ock=True)
+            cmds.undoInfo(ock=1)
             return func(*args, **kwargs)
         finally:
             # after calling the func, end the undo chunk and undo
-            cmds.undoInfo(cck=True)
+            cmds.undoInfo(cck=1)
             cmds.undo()
 
     return _undofunc

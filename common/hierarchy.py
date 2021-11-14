@@ -179,7 +179,7 @@ def batch_parent(obj_list, parent):
     :param parent: str. parent object
     """
     for item in obj_list:
-        cmds.parent(item, parent, relative=False)
+        cmds.parent(item, parent, relative=0)
 
 
 def hierarchical_parent(obj_list):

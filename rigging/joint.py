@@ -83,19 +83,19 @@ def orient_joint(jnts):
     """
     if type(jnts) == 'list':
         for jnt in jnts:
-            cmds.select(jnt, add=True)
+            cmds.select(jnt, add=1)
     else:
         cmds.select(jnts)
-    children = cmds.listRelatives(jnts, children=True, type='joint', ad=True)
+    children = cmds.listRelatives(jnts, children=1, type='joint', ad=1)
 
     if children:
-        cmds.joint(e=True, ch=True, oj='xyz', sao='zup')
+        cmds.joint(e=1, ch=1, oj='xyz', sao='zup')
         for child in children:
-            if cmds.listRelatives(child, children=True, type='joint') is None:
+            if cmds.listRelatives(child, children=1, type='joint') is None:
                 for attr in ['jointOrientX', 'jointOrientY', 'jointOrientZ']:
                     cmds.setAttr('{}.{}'.format(child, attr), 0)
     else:
-        cmds.joint(e=True, oj='xyz', zso=True)  # why zso matters
+        cmds.joint(e=1, oj='xyz', zso=1)  # why zso matters
 
 
 def set_prefer_angle(jnt, vec=None):

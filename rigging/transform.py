@@ -28,7 +28,7 @@ def clear_transform(ctrl, offset, transform):
 
     :param ctrl: str. controller transform
     :param offset: str. offset group name
-    :param transform: str. transform node
+    :param transform: str. transform node, typically a joint
     """
     match_xform(offset, transform)
 
@@ -53,6 +53,12 @@ def match_xform(source, target):
 
 
 def get_dag_path(node=None):
+    """
+    Get DAG path of the specified node
+
+    :param node: str. maya object
+    :return: str. DAG path
+    """
     selection = om.MSelectionList()
     selection.add(node)
     dag_path = om.MDagPath()

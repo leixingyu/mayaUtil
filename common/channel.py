@@ -188,19 +188,19 @@ def validate_connection(attribute):
     obj, channel = attribute.split('.')
 
     if '.' not in attribute:
-        return False, '*{}* is not an attribute'.format(attribute)
+        return 0, '*{}* is not an attribute'.format(attribute)
 
     if not cmds.ls(obj):
-        return False, '*{}* object does not exist'.format(obj)
+        return 0, '*{}* object does not exist'.format(obj)
 
     if not cmds.attributeQuery(channel, node=obj, ex=1):
-        return False, '*{}* attribute does not exist'.format(attribute)
+        return 0, '*{}* attribute does not exist'.format(attribute)
 
     if not (cmds.attributeQuery(channel, node=obj, keyable=1)
             and not cmds.getAttr(attribute, lock=1)):
-        return False, '*{}* attribute not keyable or locked'.format(attribute)
+        return 0, '*{}* attribute not keyable or locked'.format(attribute)
 
     if cmds.connectionInfo(attribute, isDestination=1):
-        return False, '*{}* attribute already connected'.format(attribute)
+        return 0, '*{}* attribute already connected'.format(attribute)
 
-    return True, 'Validation Complete'
+    return 1, 'Validation Complete'
