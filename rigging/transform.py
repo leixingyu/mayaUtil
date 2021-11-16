@@ -1,8 +1,6 @@
 import maya.cmds as cmds
 from maya import OpenMaya as om
 
-from ..common import hierarchy
-
 
 def colorize_rgb_normalized(node, r, g, b):
     """
@@ -40,11 +38,9 @@ def match_xform(source, target):
     """
     Match source rotation and translation to the target
 
-    :param source:
-    :param target:
-    :return:
+    :param source: str. source transform name
+    :param target: str. target transform name
     """
-
     pos = cmds.xform(target, q=1, t=1, ws=1)
     rot = cmds.xform(target, q=1, ro=1, ws=1)
 
