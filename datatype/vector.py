@@ -47,16 +47,19 @@ class Vector(object):
     def normalize(self):
         if self._vector:
             try:
-                length = math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
                 return Vector(
-                    self.x / length,
-                    self.y / length,
-                    self.z / length
+                    self.x / self.length,
+                    self.y / self.length,
+                    self.z / self.length
                 )
             except ZeroDivisionError:
                 pass
 
         return Vector(0, 0, 0)
+
+    @property
+    def length(self):
+        return math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
 
     @property
     def x(self):
