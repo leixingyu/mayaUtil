@@ -15,7 +15,6 @@ def set_export_path(title='Export', default_path='C:/', file_type='*'):
         title,
         default_path,
         filter=file_type)[0]
-
     return path
 
 
@@ -33,11 +32,10 @@ def set_import_path(title='Import', default_path='C:/', file_type='*'):
         title,
         default_path,
         filter=file_type)[0]
-
     return path
 
 
-def prompt_message_log(message, ltype='error', title=''):
+def message_log(message, ltype='error', title=''):
     """
     Activate a message box prompt with one confirm button
 
@@ -57,11 +55,10 @@ def prompt_message_log(message, ltype='error', title=''):
     msg_box.setText(message)
     msg_box.setStandardButtons(QtWidgets.QMessageBox.Ok)
     msg_box.setIcon(icon)
-
     return msg_box.exec_()
 
 
-def prompt_message_choose(message, title=''):
+def message_yesno(message, title=''):
     """
     Activate a message box prompt for user to choose
 
@@ -76,4 +73,3 @@ def prompt_message_choose(message, title=''):
     msg_box.setStandardButtons(QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
     user_choice = msg_box.exec_()
     return user_choice
-
