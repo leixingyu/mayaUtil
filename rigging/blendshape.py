@@ -31,7 +31,7 @@ def get_output_blendshapes(mobject):
     cmds.select(mobject)
     output_attrs = cmds.channelBox('mainChannelBox', out=1, q=1)
 
-    nodes = []
+    nodes = list()
     for attr in output_attrs:
         node = attr.split('.')[0]
         if cmds.nodeType(node) == 'blendShape':
@@ -47,7 +47,7 @@ def get_input_blendshapes(mobject):
     :param mobject: str. maya object
     :return: list. blendshape nodes
     """
-    nodes = []
+    nodes = list()
     for node in cmds.listHistory(mobject):
         if cmds.nodeType(node) == 'blendShape':
             nodes.append(node)

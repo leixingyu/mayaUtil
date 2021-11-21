@@ -1,14 +1,3 @@
-import logging
-import os
-import tempfile
-try:
-    import ffmpeg
-except ImportError:
-    logging.error('third-party ffmpeg failure')
-import subprocess
-
-import maya.cmds as cmds
-
 """
 Can be used through convert_video() or use it like this to connect multiple
 sequences located in separated folder hierarchy
@@ -25,10 +14,21 @@ vc = VideoConverter(seq_a.sequence, seq_b.sequence)
 vc.explicitExport(output_path, '', 0, 30)
 """
 
+import logging
+import os
+import tempfile
+try:
+    import ffmpeg
+except ImportError:
+    logging.error('third-party ffmpeg failure')
+import subprocess
+
+import maya.cmds as cmds
+
 
 class Sequence(object):
     """
-    class collects file sequence information to pass into video converter.
+    Class collects file sequence information to pass into video converter.
     """
 
     def __init__(self, folder):
@@ -63,7 +63,6 @@ class Sequence(object):
         image_names = os.listdir(self._folder)
         seq_paths = [os.path.join(self._folder, name)
                           for name in image_names]
-
         return seq_paths
 
 
@@ -105,7 +104,7 @@ class VideoConverter(object):
             )
         for sequence in self._sequences:
             for image in sequence:
-                temp_file.write("file '{0}'\n".format(image))
+                temp_file.write("file '{}'\n".format(image))
         temp_file.close()
 
         # use ffmpeg command to convert images to audio
@@ -179,7 +178,7 @@ def attach_audio(output_path, frame_rate, audio_file, audio_start):
     :return: (str, str). subprocess stdout and stderr.
     """
     timecode = frame_to_timecode(int(audio_start), frame_rate)
-    temp_mov = '{0}\\vid.mov'.format(os.path.dirname(output_path))
+    temp_mov = '{}\\vid.mov'.format(os.path.dirname(output_path))
     offset_cmds = [
         ffmpeg.FFMPEG_BIN,
         '-i', output_path,
@@ -227,7 +226,7 @@ def take_maya_screenshot(path, name):
     :param name: str. name of the screenshot
     :return: str. full path to the screenshot
     """
-    file_name = '%s.jpg' % name
+    file_name = '{}.jpg'.format(name)
     full_path = os.path.join(path, file_name)
 
     if cmds.ls(selection=1):

@@ -40,15 +40,11 @@ def get_all_under_hierarchy(root):
     :return: list. children and grand children of the root
     """
     children = list()
-
     direct_children = cmds.listRelatives(root, children=1)
-
     if direct_children:
         children.extend(direct_children)
-
         for child in direct_children:
             children.extend(get_all_under_hierarchy(child))
-
     return children
 
 
@@ -119,8 +115,10 @@ def delete_hierarchy_except_node(roots, type_specified):
             for child in children:
                 # the child is not top object or different type, re-parent
                 if not cmds.listConnections(root_obj, type=type_specified):
-                    cmds.parent(child,
-                                cmds.listRelatives(root_obj, parent=1))
+                    cmds.parent(
+                        child,
+                        cmds.listRelatives(root_obj, parent=1)
+                    )
                 delete_hierarchy_except_node(child, type_specified)
 
             # children moved under another parent, delete original parent
@@ -161,9 +159,11 @@ def get_shape_from_transform(
 
     if check_unique_child:
         assert len(shapes_result) != 0, "no shape node found"
-        assert len(shapes_result) == 1, "multiple shape node found in {} " \
-                                        "they are: {}"\
-            .format(transform, str(shapes_result))
+        assert len(shapes_result) == 1,\
+            "multiple shape node found in {} they are: {}" .format(
+                transform,
+                str(shapes_result)
+            )
 
     if enable_result_only:
         return shapes_result

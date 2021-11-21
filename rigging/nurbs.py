@@ -38,9 +38,12 @@ def merge_curves(name, curves=None):
             logging.error('Merge fail, %s not transform node', curve)
             return 0
 
-    shapes = []
+    shapes = list()
     for transform in curves:
-        shape = hierarchy.get_shape_from_transform(transform, check_unique_child=0)
+        shape = hierarchy.get_shape_from_transform(
+            transform,
+            check_unique_child=0
+        )
         cmds.makeIdentity(transform, apply=1, r=1, t=1, s=1)
         shapes.extend(shape)
 

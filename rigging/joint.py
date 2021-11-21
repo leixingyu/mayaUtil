@@ -14,10 +14,9 @@ def get_skin_from_joint(jnt):
     cls = cmds.listConnections(jnt, type='skinCluster')
     cls = list(set(cls))
 
-    meshes = []
+    meshes = list()
     for cl in cls:
         meshes += cmds.listConnections(cl, type='mesh')
-
     return meshes
 
 
@@ -36,12 +35,11 @@ def get_joint_from_skin(mesh):
         raise RuntimeError("skin selected is neither transform or mesh type")
 
     cls = cmds.listConnections(mesh, type='skinCluster')
-    jnts = []
+    jnts = list()
     for cl in cls:
         jnt = cmds.listConnections(cl, type='joint')
         jnt = list(set(jnt))
         jnts += jnt
-
     return jnts
 
 
@@ -125,7 +123,7 @@ def clear_joint_orientation(root):
     # get all joint orientation from root
     jnts = hierarchy.get_hierarchy_of_type(root, 'joint')
 
-    non_zero_jnts = []
+    non_zero_jnts = list()
     for jnt in jnts:
         for axis in ['x', 'y', 'z']:
             rot_value = cmds.getAttr('{}.r{}'.format(jnt, axis))
@@ -137,13 +135,13 @@ def clear_joint_orientation(root):
         rot_x = cmds.getAttr('{}.rx'.format(jnt))
         rot_y = cmds.getAttr('{}.ry'.format(jnt))
         rot_z = cmds.getAttr('{}.rz'.format(jnt))
-        print('non-zero rotation value found in jnt: {}; ' \
-              'rotation value: ({},{},{})'.format(jnt, rot_x, rot_y, rot_z))
+        print("non-zero rotation value found in jnt: {}; "
+              "rotation value: ({},{},{})".format(jnt, rot_x, rot_y, rot_z))
 
     # unbind skin, clear rotation, re-bind skin
     meshes = get_skin_from_joint(root)
     cmds.skinCluster(meshes, edit=1, unbindKeepHistory=1)
-    jnts = []
+    jnts = list()
     for mesh in meshes:
         jnts += get_joint_from_skin(mesh)
     jnts = list(set(jnts))

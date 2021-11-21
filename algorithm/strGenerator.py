@@ -2,15 +2,13 @@ import random
 import string
 
 
-"""
-A temporary string generator for purpose like creating temp name
-
-s = StrGenerator()
-temp_string = s.tmp
-"""
-
-
 class StrGenerator(object):
+    """
+    A temporary string generator for purpose like creating temp name
+    s = StrGenerator()
+    temp_string = s.tmp
+    """
+
     def __init__(self, prefix='', length=6):
         """
         :param prefix: str. prefix before randomize string
@@ -18,7 +16,6 @@ class StrGenerator(object):
         """
         self._prefix = prefix
         self._len = length
-
         self._choices = string.ascii_uppercase + string.digits
 
     @property

@@ -70,6 +70,8 @@ def message_yesno(message, title=''):
     msg_box.setIcon(QtWidgets.QMessageBox.Question)
     msg_box.setWindowTitle(title)
     msg_box.setText(message)
-    msg_box.setStandardButtons(QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No)
+    msg_box.setStandardButtons(
+        QtWidgets.QMessageBox.Yes |
+        QtWidgets.QMessageBox.No)
     user_choice = msg_box.exec_()
     return user_choice

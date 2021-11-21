@@ -3,9 +3,8 @@ import collections
 
 def get_list_unique(seq):
     """
-    | Fastest order preserving way to make a list unique
-    | http://www.peterbe.com/plog/uniqifiers-benchmark
-    | Specific method by: ``Dave Kirby``
+    Fastest order preserving way to make a list unique
+    http://www.peterbe.com/plog/uniqifiers-benchmark by: Dave Kirby
 
     :param seq: list. Input sequence
     :return: list. Unique sequence

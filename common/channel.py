@@ -82,12 +82,16 @@ def reset_attrs():
                 read=1,
                 write=1,
                 connectable=1
-                ) or []
+                ) or list()
 
         for channel in selected_channels:
             attribute = "{0}.{1}".format(selection, channel)
             if not cmds.getAttr(attribute, lock=1):
-                default_value = cmds.attributeQuery(channel, node=selection, listDefault=1)
+                default_value = cmds.attributeQuery(
+                    channel,
+                    node=selection,
+                    listDefault=1
+                )
                 if default_value:
                     cmds.setAttr(attribute, default_value[0])
 

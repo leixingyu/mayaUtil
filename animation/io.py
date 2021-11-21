@@ -3,8 +3,8 @@ import maya.cmds as cmds
 
 def create_export_node(attrs, node_name):
     """
-    Create a dedicated temp node for exporting animation use, as sometimes it's
-    necessary to have a fixed node name for mapping purpose
+    Create a dedicated temp node for exporting animation use,
+    as sometimes it's necessary to have a fixed node name for mapping purpose
 
     :param attrs: list. list of attributes
     :param node_name: str. the name of the temp node
@@ -12,11 +12,9 @@ def create_export_node(attrs, node_name):
     """
     node = cmds.createNode('network', name=node_name)
     cmds.select(node)
-
     for attr in attrs:
         mobject = attr.split('.')[0]
         channel = attr.split('.')[-1]
-
         cmds.addAttr(longName=channel, at='float', keyable=1)
         cmds.connectAttr(
             '{}.{}'.format(mobject, channel),

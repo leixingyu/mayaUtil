@@ -52,4 +52,5 @@ def get_files(path):
     :param path: str. root directory for searching
     :return: list. list of files in that directory
     """
-    return [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+    return [f for f in os.listdir(path)
+            if os.path.isfile(os.path.join(path, f))]

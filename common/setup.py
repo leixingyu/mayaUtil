@@ -51,9 +51,7 @@ def remove_module(module_name):
 
     :param module_name: str. name of the module
     """
-    print('Removing {} module'.format(module_name))
-
-    to_delete = []
+    to_delete = list()
     for module in sys.modules:
         if module.split('.')[0] == module_name:
             to_delete.append(module)

@@ -1,18 +1,14 @@
-"""
-Class for handling color in rgb format
-
-to use a example color:
-
-red = ColorRGB.red()
-print(red.r, red.g, red.b)
-
-to define a color, put rgb code as arguments:
-
-my_color = ColorRGB(112, 24, 200)
-"""
-
-
 class ColorRGB(object):
+    """
+    Class for handling color in rgb format
+
+    to use a pre-defined color:
+    red = ColorRGB.red()
+    print(red.r, red.g, red.b)
+
+    to define a custom color, put rgb code as arguments:
+    my_color = ColorRGB(112, 24, 200)
+    """
 
     def __init__(self, r, g, b):
         try:
@@ -102,4 +98,3 @@ class ColorRGB(object):
     @property
     def b_normalized(self):
         return self._b/255.00
-
