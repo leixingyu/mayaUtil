@@ -1,4 +1,7 @@
-def remove_duplicates(seq):
+import collections
+
+
+def get_list_unique(seq):
     """
     | Fastest order preserving way to make a list unique
     | http://www.peterbe.com/plog/uniqifiers-benchmark
@@ -18,7 +21,6 @@ def get_duplicates(seq):
     :param seq: list. original list of items
     :return: list. duplicated items
     """
-    import collections
     dups = [item
             for item, count in collections.Counter(seq).items()
             if count > 1]
@@ -41,3 +43,23 @@ def get_percentages(sample_count):
         outputs.append(index * gap)
 
     return outputs
+
+
+def is_list_intersect(sub, sequence):
+    """
+    Find if any element in the subset belongs to a master sequence
+    https://stackoverflow.com/questions/62115746/can-i-check-if-a-list-contains-any-item-from-another-list
+
+    :return: bool. whether if the sequence contains any item from the subset
+    """
+    return any(item in sequence for item in sub)
+
+
+def is_list_contained(sub, sequence):
+    """
+    Find if all elements in the subset belongs to a master sequence
+    https://stackoverflow.com/questions/6159313/how-to-test-the-membership-of-multiple-values-in-a-list
+
+    :return: bool. whether if the sequence contains all items of the subset
+    """
+    return all(item in sequence for item in sub)
