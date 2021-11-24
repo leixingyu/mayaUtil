@@ -1,4 +1,17 @@
-from Qt import QtWidgets
+from Qt import QtWidgets, QtGui, QtCore
+
+
+def pick_color(qcolor=None):
+    """
+    Prompt user to pick a color
+
+    :param qcolor: QtGui.QColor. pre-selected color
+    :return: QtGui.QColor. user selected color
+    """
+    if not qcolor:
+        qcolor = QtGui.QColor(0, 0, 0)
+
+    return QtWidgets.QColorDialog.getColor(qcolor)
 
 
 def set_export_path(title='Export', default_path='C:/', file_type='*'):
@@ -51,25 +64,29 @@ def message_log(message, ltype='error', title=''):
         icon = QtWidgets.QMessageBox.Information
 
     msg_box = QtWidgets.QMessageBox()
+
+    msg_box.setIcon(icon)
     msg_box.setWindowTitle(title)
     msg_box.setText(message)
+
     msg_box.setStandardButtons(QtWidgets.QMessageBox.Ok)
-    msg_box.setIcon(icon)
     return msg_box.exec_()
 
 
 def message_yesno(message, title=''):
     """
-    Activate a message box prompt for user to choose
+    Raise a message box prompt for user to choose
 
     :param message: str. custom message
     :param title: str. message box title
     :return: QtWidgets.QMessageBox.Yes or No. user's choice
     """
     msg_box = QtWidgets.QMessageBox()
+
     msg_box.setIcon(QtWidgets.QMessageBox.Question)
     msg_box.setWindowTitle(title)
     msg_box.setText(message)
+
     msg_box.setStandardButtons(
         QtWidgets.QMessageBox.Yes |
         QtWidgets.QMessageBox.No)
