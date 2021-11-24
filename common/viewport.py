@@ -1,5 +1,3 @@
-from functools import wraps
-
 import maya.cmds as cmds
 
 PANE_NAME = 'viewPanes'  # also known as $gMainPane in mel
@@ -63,22 +61,3 @@ def switch_camera(camera, model_panels=None):
     if camera in cameras:
         for model_panel in model_panels:
             cmds.modelEditor(model_panel, camera=camera, e=1)
-
-
-def viewport_off(func):
-    """
-    src: https://blog.asimation.com/disable-maya-viewport-while-running-code/
-    Decorator - turn off Maya display while func is running.
-    if func will fail, the error will be raised after.
-    """
-    @wraps(func)
-    def wrap(*args, **kwargs):
-        cmds.paneLayout(PANE_NAME, manage=0, edit=1)
-        try:
-            return func(*args, **kwargs)
-        except Exception:
-            # will raise original error
-            raise
-        finally:
-            cmds.paneLayout(PANE_NAME, manage=1, edit=1)
-    return wrap
