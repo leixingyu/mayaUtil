@@ -28,7 +28,7 @@ def get_joint_from_skin(mesh):
     :return: list. joints
     """
     if cmds.objectType(mesh, isType='transform'):
-        mesh = hierarchy.get_shape_from_transform(mesh)
+        mesh = hierarchy.get_shape_from_xform(mesh)
     elif cmds.objectType(mesh, isType='mesh'):
         pass
     else:

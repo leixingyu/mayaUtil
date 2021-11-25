@@ -19,7 +19,7 @@ def colorize_rgb_normalized(node, r, g, b):
     cmds.setAttr('{}.overrideColorRGB'.format(node), r, g, b)
 
 
-def clear_transform(ctrl, offset, transform):
+def clear_xform(ctrl, offset, transform):
     """
     Use offset group to clear out control's position and rotation
     Used to match controller to the transform of a joint, while keeping 0 value

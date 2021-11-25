@@ -142,7 +142,7 @@ def delete_hierarchy_shape(roots):
             cmds.delete(shapes)
 
 
-def get_shape_from_transform(
+def get_shape_from_xform(
         transform,
         enable_result_only=1,
         check_unique_child=1):

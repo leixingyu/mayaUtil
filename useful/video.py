@@ -16,12 +16,13 @@ vc.explicitExport(output_path, '', 0, 30)
 
 import logging
 import os
+import subprocess
 import tempfile
+
 try:
     import ffmpeg
 except ImportError:
     logging.error('third-party ffmpeg failure')
-import subprocess
 
 import maya.cmds as cmds
 

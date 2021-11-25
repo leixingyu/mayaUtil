@@ -3,10 +3,9 @@ import logging
 import maya.cmds as cmds
 from maya import OpenMaya as om
 
-import xutility.rigging.transform
-from ..rigging.transform import colorize_rgb_normalized
+from ..rigging import transform
 from ..common import hierarchy
-from ..algorithm import algorithm
+from ..useful import algorithm
 
 
 def colorize_rgb(crv, r, g, b):
@@ -18,7 +17,7 @@ def colorize_rgb(crv, r, g, b):
     :param g: float. green channel value
     :param b: float. blue channel value
     """
-    colorize_rgb_normalized(crv, r / 255.0, g / 255.0, b / 255.0)
+    transform.colorize_rgb_normalized(crv, r / 255.0, g / 255.0, b / 255.0)
 
 
 def merge_curves(name, curves=None):
@@ -39,12 +38,12 @@ def merge_curves(name, curves=None):
             return 0
 
     shapes = list()
-    for transform in curves:
-        shape = hierarchy.get_shape_from_transform(
-            transform,
+    for xform in curves:
+        shape = hierarchy.get_shape_from_xform(
+            xform,
             check_unique_child=0
         )
-        cmds.makeIdentity(transform, apply=1, r=1, t=1, s=1)
+        cmds.makeIdentity(xform, apply=1, r=1, t=1, s=1)
         shapes.extend(shape)
 
     parent = cmds.createNode('transform', n=name)
@@ -76,8 +75,8 @@ def make_curve_by_text(text, name, font='MS Gothic'):
     cmds.delete(curve)
 
     curve_shapes = cmds.listRelatives(temp, children=1)
-    for transform in curve_shapes:
-        cmds.makeIdentity(transform, apply=1, t=1, r=1, s=1)
+    for xform in curve_shapes:
+        cmds.makeIdentity(xform, apply=1, t=1, r=1, s=1)
     merge_curves(name, curves=curve_shapes)
     cmds.delete(temp)
 
@@ -97,7 +96,7 @@ def get_point_on_curve(curve, sample):
 
     points = list()
     tangents = list()
-    crv_fn = om.MFnNurbsCurve(xutility.rigging.transform.get_dag_path(curve))
+    crv_fn = om.MFnNurbsCurve(transform.get_dag_path(curve))
     for percentage in plists:
         parameter = crv_fn.findParamFromLength(crv_fn.length() * percentage)
         point = om.MPoint()
