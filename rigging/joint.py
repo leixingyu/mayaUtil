@@ -79,7 +79,7 @@ def orient_joint(jnts):
 
     :param jnts: list or str, joint(s)
     """
-    if type(jnts) == 'list':
+    if type(jnts) == list:
         for jnt in jnts:
             cmds.select(jnt, add=1)
     else:

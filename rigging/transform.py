@@ -34,18 +34,20 @@ def clear_xform(ctrl, offset, transform):
     cmds.makeIdentity(ctrl, apply=1, t=1, r=1, s=1)
 
 
-def match_xform(source, target):
+def match_xform(source, target, skip_rotation=0):
     """
     Match source rotation and translation to the target
 
     :param source: str. source transform name
     :param target: str. target transform name
+    :param skip_rotation: bool. whether skip rotation matching, used for joint
     """
     pos = cmds.xform(target, q=1, t=1, ws=1)
     rot = cmds.xform(target, q=1, ro=1, ws=1)
 
     cmds.move(pos[0], pos[1], pos[2], source)
-    cmds.rotate(rot[0], rot[1], rot[2], source)
+    if not skip_rotation:
+        cmds.rotate(rot[0], rot[1], rot[2], source)
 
 
 def get_dag_path(node=None):
