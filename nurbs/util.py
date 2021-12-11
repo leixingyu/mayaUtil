@@ -3,21 +3,8 @@ import logging
 import maya.cmds as cmds
 from maya import OpenMaya as om
 
-from ..rigging import transform
-from ..common import hierarchy
+from ..common import dgnode, hierarchy
 from ..useful import algorithm
-
-
-def colorize_rgb(crv, r, g, b):
-    """
-    Colorize the nurbs curve
-
-    :param crv: str. nurbs curve
-    :param r: float. red channel value
-    :param g: float. green channel value
-    :param b: float. blue channel value
-    """
-    transform.colorize_rgb_normalized(crv, r / 255.0, g / 255.0, b / 255.0)
 
 
 def merge_curves(name, curves=None):
@@ -96,7 +83,7 @@ def get_point_on_curve(curve, sample):
 
     points = list()
     tangents = list()
-    crv_fn = om.MFnNurbsCurve(transform.get_dag_path(curve))
+    crv_fn = om.MFnNurbsCurve(dgnode.get_dag_path(curve))
     for percentage in plists:
         parameter = crv_fn.findParamFromLength(crv_fn.length() * percentage)
         point = om.MPoint()
