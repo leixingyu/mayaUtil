@@ -1,5 +1,7 @@
 import maya.cmds as cmds
 
+from ..useful import algorithm
+
 
 def get_blendshape_targets(blendshape):
     """
@@ -23,28 +25,20 @@ def get_blendshape_targets(blendshape):
 
 def get_output_blendshapes(mobject):
     """
-    Get blendshape nodes from output section of the channel box
+    Get blendshape nodes from destination (output) of node
 
     :param mobject: str. maya object
     :return: list. blendshape nodes
     """
-    cmds.select(mobject)
-    output_attrs = cmds.channelBox('mainChannelBox', out=1, q=1)
-
-    nodes = list()
-    for attr in output_attrs:
-        node = attr.split('.')[0]
-        if cmds.nodeType(node) == 'blendShape':
-            nodes.append(node)
-
-    return nodes
+    blendshapes = cmds.listConnections(mobject, d=1, type='blendShape')
+    return algorithm.get_list_unique(blendshapes)
 
 
-def get_input_blendshapes(mobject):
+def get_container_blendshapes(mobject):
     """
-    Get blendshape nodes from input section of the channel box
+    Get blendshape nodes from container in source (input)
 
-    :param mobject: str. maya object
+    :param mobject: str. maya container node
     :return: list. blendshape nodes
     """
     nodes = list()
