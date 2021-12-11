@@ -1,8 +1,7 @@
 import maya.cmds as cmds
-from maya import OpenMaya as om
 
 
-def colorize_rgb_normalized(node, r, g, b):
+def colorize_xform(node, r, g, b):
     """
     Colorize transform
 
@@ -48,17 +47,3 @@ def match_xform(source, target, skip_rotation=0):
     cmds.move(pos[0], pos[1], pos[2], source)
     if not skip_rotation:
         cmds.rotate(rot[0], rot[1], rot[2], source)
-
-
-def get_dag_path(node=None):
-    """
-    Get DAG path of the specified node
-
-    :param node: str. maya object
-    :return: str. DAG path
-    """
-    selection = om.MSelectionList()
-    selection.add(node)
-    dag_path = om.MDagPath()
-    selection.getDagPath(0, dag_path)
-    return dag_path
