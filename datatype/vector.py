@@ -26,6 +26,14 @@ class Vector(object):
         if not self._vector:
             raise TypeError('initialize failure, check input type')
 
+    def __repr__(self):
+        return '{}({}, {}, {})'.format(
+            self.__class__.__name__,
+            self.x,
+            self.y,
+            self.z
+        )
+
     def __neg__(self):
         return Vector(-self.x, -self.y, -self.z)
 
@@ -41,8 +49,11 @@ class Vector(object):
     def __rsub__(self, other):
         return -self.__sub__(other)
 
-    def validate(self):
-        pass
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y, self.z + other.z)
+
+    def __radd__(self, other):
+        return self.__add__(other)
 
     def normalize(self):
         if self._vector:
