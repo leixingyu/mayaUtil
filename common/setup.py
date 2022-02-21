@@ -2,9 +2,9 @@ import sys
 from shiboken2 import wrapInstance
 from builtins import int
 
-from maya.api import OpenMayaUI
 import maya.cmds as cmds
 import maya.mel as mel
+from maya.api import OpenMayaUI
 from Qt import QtWidgets
 
 
@@ -62,7 +62,7 @@ def manage_references():
     """
     Get all reference path according to the reference editor
 
-    :return: list. reference path
+    :return: list. reference paths
     """
     ref_nodes = cmds.ls(type='reference')
     ref_paths = list()
@@ -76,9 +76,15 @@ def manage_references():
 
     return ref_paths
 
-    # to unload un-necessary reference
-    # for path in ref_discard_paths:
-    #    cmds.file(path, unloadReference=1)
+
+def unload_references(ref_paths):
+    """
+    Unload unwanted references
+
+    :param ref_paths: list. reference paths
+    """
+    for path in ref_paths:
+        cmds.file(path, unloadReference=1)
 
 
 def toggle_layer(layer_sig='*:Layer', is_viz=1):
