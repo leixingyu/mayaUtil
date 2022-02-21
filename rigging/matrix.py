@@ -42,28 +42,45 @@ def get_matrix(node, is_world=1):
     )
 
 
-def get_parent_matrix(node):
+def get_post_mult_matrix(result_mat, source_mat):
     """
-    Get parent matrix of a maya node
+    Get post multiplying matrix
+
+    :param result_mat: om.MMatrix. the result matrix after multiplication
+    :param source_mat: om.MMatrix. the source matrix used in post multiplying
+    :return: om.MMatrix. matrix used in post multiplication
+
+    Usage:
+    http://discourse.techart.online/t/convert-world-space-coordinates-to-object-space-coordinates-in-maya/
+
     Parent matrix is used to convert object space transformation matrix to
     world space transformation matrix; this 'offset' matrix will remain the
     same however the object moves.
 
-    Details:
-    http://discourse.techart.online/t/convert-world-space-coordinates-to-object-space-coordinates-in-maya/
-
+    the order of matrix multiplication matters:
     world mat = local mat * parent mat
     local mat inverse * world mat = local mat inverse * local mat * parent mat
     parent mat = local mat inverse * world mat
-
-    :param node: str. node name
-    :return: om.MMatrix. 'offset' parent matrix
     """
-    ws_mat = get_matrix(node)
-    ls_mat_inv = get_matrix(node, is_world=0).inverse()
+    return source_mat.inverse() * result_mat
 
-    # the order of matrix multiplication matters
-    return ls_mat_inv * ws_mat
+
+def get_pre_mult_matrix(result_mat, source_mat):
+    """
+    Get pre multiplying matrix
+
+    :param result_mat: om.MMatrix. the result matrix after multiplication
+    :param source_mat: om.MMatrix. the source matrix used in pre multiplying
+    :return: om.MMatrix. matrix used in pre multiplication
+
+    Usage:
+    Similar to post-multiplication matrix, difference being the order
+    pre-multiplication is used commonly in parent constraint
+
+    joint mat = const mat * ctrl mat
+    const mat = joint mat * ctrl mat inverse
+    """
+    return result_mat * source_mat.inverse()
 
 
 def decompose_translation(matrix):
