@@ -1,4 +1,4 @@
-from maya import OpenMaya as om
+from maya.api import OpenMaya as om
 
 
 def get_dag_path(node=None):

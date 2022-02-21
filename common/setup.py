@@ -2,7 +2,7 @@ import sys
 from shiboken2 import wrapInstance
 from builtins import int
 
-import maya.OpenMayaUI
+from maya.api import OpenMayaUI
 import maya.cmds as cmds
 import maya.mel as mel
 from Qt import QtWidgets
@@ -14,7 +14,7 @@ def get_maya_main_window():
 
     :return: window instance, maya program window
     """
-    main_window_ptr = maya.OpenMayaUI.MQtUtil.mainWindow()
+    main_window_ptr = OpenMayaUI.MQtUtil.mainWindow()
     return wrapInstance(int(main_window_ptr), QtWidgets.QMainWindow)
 
 

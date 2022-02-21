@@ -1,7 +1,7 @@
 import logging
 
 import maya.cmds as cmds
-from maya import OpenMaya as om
+from maya.api import OpenMaya as om
 
 from ..common import dgnode, hierarchy
 from ..useful import algorithm
