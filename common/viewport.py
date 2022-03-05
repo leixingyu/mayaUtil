@@ -1,3 +1,5 @@
+import os
+
 import maya.cmds as cmds
 
 PANE_NAME = 'viewPanes'  # also known as $gMainPane in mel
@@ -61,3 +63,34 @@ def switch_camera(camera, model_panels=None):
     if camera in cameras:
         for model_panel in model_panels:
             cmds.modelEditor(model_panel, camera=camera, e=1)
+
+
+def take_maya_screenshot(path, name):
+    """
+    Take a screenshot in maya viewport
+    :param path: str. output directory
+    :param name: str. name of the screenshot
+    :return: str. full path to the screenshot
+    """
+    file_name = '{}.jpg'.format(name)
+    full_path = os.path.join(path, file_name)
+
+    if cmds.ls(selection=1):
+        cmds.select(clear=1)
+        cmds.selectMode(object=1)
+
+    cmds.viewFit()
+    cmds.setAttr('defaultRenderGlobals.imageFormat', 8)
+    cmds.playblast(
+        completeFilename=full_path,
+        st=1,
+        et=1,
+        format='image',
+        forceOverwrite=1,
+        w=600,
+        h=600,
+        showOrnaments=0,
+        viewer=0
+    )
+
+    return full_path
