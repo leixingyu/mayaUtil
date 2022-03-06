@@ -1,6 +1,5 @@
 import maya.cmds as cmds
-
-from ..useful import algorithm
+from pipelineUtil.common import algorithm
 
 
 def get_blendshape_targets(blendshape):

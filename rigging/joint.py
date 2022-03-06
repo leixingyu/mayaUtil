@@ -1,7 +1,7 @@
 import maya.cmds as cmds
+from pipelineUtil.datatype import vector
 
 from ..common import hierarchy
-from ..datatype import vector
 
 
 def get_skin_from_joint(jnt):
@@ -106,7 +106,7 @@ def set_prefer_angle(jnt, vec=None):
     """
     if vec is None:
         vec = [0, 0, 1]
-    v = vector.Vector(vec)
+    v = vector.Vector3(vec)
     offset = 20
 
     cmds.rotate(v.x * offset, v.y * offset, v.z * offset, jnt, relative=1)

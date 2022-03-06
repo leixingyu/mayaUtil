@@ -2,9 +2,9 @@ import logging
 
 import maya.cmds as cmds
 from maya.api import OpenMaya as om
+from pipelineUtil.common import algorithm
 
 from ..common import dgnode, hierarchy
-from ..useful import algorithm
 
 
 def merge_curves(name, curves=None):
