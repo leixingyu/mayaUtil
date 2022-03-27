@@ -65,9 +65,10 @@ def switch_camera(camera, model_panels=None):
             cmds.modelEditor(model_panel, camera=camera, e=1)
 
 
-def take_maya_screenshot(path, name):
+def take_screenshot(path, name):
     """
     Take a screenshot in maya viewport
+
     :param path: str. output directory
     :param name: str. name of the screenshot
     :return: str. full path to the screenshot
