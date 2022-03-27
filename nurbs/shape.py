@@ -29,7 +29,9 @@ class Shape(object):
         :param name: str. curve shape name
         :return: Shape
         """
-        cvs = cmds.getAttr('{}.cv[*]'.format(name))
+        cvs = zip(*(iter(
+            cmds.xform('{}.cv[*]'.format(name), t=1, ws=1, q=1)
+        ),) * 3)
         degree = cmds.getAttr('{}.degree'.format(name))
         form = cmds.getAttr('{}.form'.format(name))
 
@@ -106,8 +108,9 @@ class Shape(object):
         """
         c = cmds.curve(point=self._pts, degree=self._degree)
 
-        if self._form == 1:
-            cmds.closeCurve(c, ps=0)
+        # curve is in close or periodic form
+        if self._form in [1, 2]:
+            cmds.closeCurve(c, ps=0, rpo=1)
 
         self._transform = c
         return hierarchy.get_shape_from_xform(c, check_unique_child=0)
