@@ -1,7 +1,12 @@
+import logging
+
 import maya.cmds as cmds
-from pipelineUtil.datatype import vector
+from pipelineUtil.dataType import vector
 
 from ..common import hierarchy
+
+
+logger = logging.getLogger(__name__)
 
 
 def get_skin_from_joint(jnt):
@@ -135,8 +140,8 @@ def clear_joint_orientation(root):
         rot_x = cmds.getAttr('{}.rx'.format(jnt))
         rot_y = cmds.getAttr('{}.ry'.format(jnt))
         rot_z = cmds.getAttr('{}.rz'.format(jnt))
-        print("non-zero rotation value found in jnt: {}; "
-              "rotation value: ({},{},{})".format(jnt, rot_x, rot_y, rot_z))
+        logger.info("non-zero rotation value found in jnt: %s; "
+              "rotation value: (%s,%s,%s)", jnt, rot_x, rot_y, rot_z)
 
     # unbind skin, clear rotation, re-bind skin
     meshes = get_skin_from_joint(root)

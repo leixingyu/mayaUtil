@@ -1,8 +1,12 @@
+import logging
 from functools import wraps
 
 import maya.cmds as cmds
 
 from .viewport import PANE_NAME
+
+
+logger = logging.getLogger(__name__)
 
 
 def undo_actions(func):
@@ -53,5 +57,5 @@ def maya_timed(func):
         except Exception:
             raise
         finally:
-            print('total execution time: {}s'.format(cmds.timer(e=1)))
+            logger.info('total execution time: %ss', cmds.timer(e=1))
     return wrap

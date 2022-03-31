@@ -1,7 +1,7 @@
 from maya.api import OpenMaya as om
 
 
-def get_dag_path(node=None):
+def get_dg_path(node=None):
     """
     Get DAG path of the specified node
 
@@ -15,14 +15,14 @@ def get_dag_path(node=None):
     return dag_path
 
 
-def get_dag_path_hierarchy(dag_path):
+def print_dg_children(dg_path):
     """
     Debug all the children's Dag path
     
-    :param dag_path: MDagPath. parent Dag path
+    :param dg_path: MDagPath. parent Dag path
     """
     dag_iter = om.MItDag(om.MItDag.kBreadthFirst)
-    dag_iter.reset(dag_path)
+    dag_iter.reset(dg_path)
     while not dag_iter.isDone():
         path = om.MDagPath()
         dag_iter.getPath(path)
@@ -44,7 +44,7 @@ def get_dg_node(node=None):
     return mobject
 
 
-def traverse_dgnode_of_type(mobject, direction, dgtype):
+def traverse_dg_node_type(mobject, direction, dgtype):
     """
     Get all DG node of type by traversing the node network
 
