@@ -1,7 +1,7 @@
 from maya.api import OpenMaya as om
 
 
-def get_dg_path(node=None):
+def get_dag_path(node=None):
     """
     Get DAG path of the specified node
 
@@ -15,7 +15,7 @@ def get_dg_path(node=None):
     return dag_path
 
 
-def print_dg_children(dg_path):
+def print_dag_children(dg_path):
     """
     Debug all the children's Dag path
     
@@ -26,11 +26,11 @@ def print_dg_children(dg_path):
     while not dag_iter.isDone():
         path = om.MDagPath()
         dag_iter.getPath(path)
-        print path.fullPathName()
+        print(path.fullPathName())
         dag_iter.next()
 
 
-def get_dg_node(node=None):
+def get_dag_node(node=None):
     """
     Get Dependency Graph Node of the specified maya node
 
@@ -44,19 +44,18 @@ def get_dg_node(node=None):
     return mobject
 
 
-def traverse_dg_node_type(mobject, direction, dgtype):
+def traverse_dg_node_type(mobject, direction, typ):
     """
     Get all DG node of type by traversing the node network
 
-    @param mobject: MObject. maya DG node to traverse
-    @param direction: MItDependencyGraph.Direction. traversal direction
-    @param dgtype: MFn.Type. type of the DG node
-
-    @return: list. all DG node of type
+    :param mobject: MObject. maya DG node to traverse
+    :param direction: MItDependencyGraph.Direction. traversal direction
+    :param typ: MFn.Type. type of the DG node
+    :return: list. all DG node of type
     """
     # Create a dependency graph iterator for our current object
     # this could also be plug level
-    dg_iter = om.MItDependencyGraph(
+    dag_iter = om.MItDependencyGraph(
         mobject,
         direction,
         om.MItDependencyGraph.kNodeLevel
@@ -64,13 +63,13 @@ def traverse_dg_node_type(mobject, direction, dgtype):
 
     # find the first match type
     names = list()
-    while not dg_iter.isDone():
-        current = dg_iter.currentItem()
+    while not dag_iter.isDone():
+        current = dag_iter.currentItem()
         node_funcs = om.MFnDependencyNode(current)
-        if current.hasFn(dgtype):
+        if current.hasFn(typ):
             name = node_funcs.name()
             names.append(name)
 
-        dg_iter.next()
+        dag_iter.next()
 
     return names

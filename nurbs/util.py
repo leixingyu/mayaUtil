@@ -4,7 +4,7 @@ import maya.cmds as cmds
 from maya.api import OpenMaya as om
 from pipelineUtil.common import algorithm
 
-from ..common import dgnode, hierarchy
+from ..common import dag, hierarchy
 
 
 def merge_curves(name, curves=None):
@@ -83,7 +83,7 @@ def get_point_on_curve(curve, sample):
 
     points = list()
     tangents = list()
-    crv_fn = om.MFnNurbsCurve(dgnode.get_dag_path(curve))
+    crv_fn = om.MFnNurbsCurve(dag.get_dag_path(curve))
     for percentage in plists:
         parameter = crv_fn.findParamFromLength(crv_fn.length() * percentage)
         point = om.MPoint()
