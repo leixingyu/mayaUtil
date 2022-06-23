@@ -55,3 +55,21 @@ def is_name_unique(obj):
         return 0
     else:
         return 1
+
+
+def remove_namespace(node):
+    """
+    Remove the top namespace of the node
+
+    :param node: str. node name
+    :return: str. new node name without top namespace
+    """
+    if ':' not in node:
+        return node
+
+    namespace, new_name = node.split(':', 1)
+    if namespace not in cmds.namespaceInfo(listOnlyNamespaces=1):
+        raise ValueError('namespace not found')
+    cmds.namespace(removeNamespace=namespace, mergeNamespaceWithRoot=1)
+
+    return new_name
