@@ -95,3 +95,16 @@ def take_screenshot(path, name):
     )
 
     return full_path
+
+
+def set_hardware_high_render_setting():
+    """
+    Set high playblast setting for hardware rendering
+    """
+    cmds.setAttr('hardwareRenderingGlobals.lineAAEnable', 0)
+    cmds.setAttr('hardwareRenderingGlobals.multiSampleEnable', 1)
+    cmds.setAttr('hardwareRenderingGlobals.ssaoEnable', 1)
+    cmds.setAttr('hardwareRenderingGlobals.ssaoAmount', 1)
+    cmds.setAttr('hardwareRenderingGlobals.ssaoRadius', 16)
+    cmds.setAttr('hardwareRenderingGlobals.ssaoFilterRadius', 16)
+    cmds.setAttr('hardwareRenderingGlobals.ssaoSamples', 16)

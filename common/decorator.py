@@ -59,3 +59,18 @@ def maya_timed(func):
         finally:
             logger.info('total execution time: %ss', cmds.timer(e=1))
     return wrap
+
+
+def require_plugin(name):
+    """
+    A function needs certain plugin to load prior
+    """
+    def real_decorator(func):
+        @wraps(func)
+        def function_wrapper(*args, **kwargs):
+            if name.split(".")[0] not in cmds.pluginInfo(name, loaded=1, q=1):
+                cmds.loadPlugin(name)
+            result = func(*args, **kwargs)
+            return result
+        return function_wrapper
+    return real_decorator

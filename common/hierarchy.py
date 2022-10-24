@@ -191,3 +191,16 @@ def hierarchical_parent(obj_list):
     for index, item in enumerate(obj_list):
         if obj_list[index] != obj_list[-1]:
             cmds.parent(obj_list[index], obj_list[index+1])
+
+
+def get_top_nodes(typ=''):
+    """
+    Get top level nodes of certain type in current scene
+
+    :param typ: str. node type
+    :return: [str]. list of top nodes
+    """
+    top_nodes = cmds.ls(assemblies=True)
+    if typ:
+        top_nodes = [node for node in top_nodes if cmds.nodeType(node) == typ]
+    return top_nodes
